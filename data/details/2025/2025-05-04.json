@@ -1,0 +1,3 @@
+{
+"CVE-2025-33218":{"id":"CVE-2025-33218","trackingId":"BH-2025-0006","title":"XXE in report import parser","vendor":"Dunder","product":"Dunder VoIP Manager","type":"XML External Entity","cwe":"CWE-611","date":"2025-05-04","status":"Fixed","cvss":6.5,"severity":"Medium","cvssVector":"CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N","summary":"The XML report importer resolves external entities, letting a low-privileged user read local files from the management server.","repo":"gpheheise/CVE-2025-33218","branch":"main","writeup":"README.md","poc":false,"pocPath":"poc","reported":"2025-02-03T09:00:00Z","acknowledged":"2025-02-07","fixed":"2025-02-23","windowDays":90,"extensions":[],"releasedAt":"2025-05-04T09:00:00Z"}
+}

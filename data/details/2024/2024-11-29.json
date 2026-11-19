@@ -1,0 +1,3 @@
+{
+"CVE-2024-49771":{"id":"CVE-2024-49771","trackingId":"BH-2024-0002","title":"Heap overflow in packet decoder","vendor":"Stark","product":"Stark Edge Router","type":"Remote Code Execution","cwe":"CWE-122","date":"2024-11-29","status":"Fixed","cvss":9.8,"severity":"Critical","cvssVector":"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H","summary":"A length field in the tunnelling protocol is trusted when copying option data, overflowing a heap buffer before authentication.","repo":"gpheheise/CVE-2024-49771","branch":"main","writeup":"README.md","poc":true,"pocPath":"poc","reported":"2024-08-31T09:00:00Z","acknowledged":"2024-09-02","fixed":"2024-11-03","windowDays":90,"extensions":[],"releasedAt":"2024-11-29T09:00:00Z"}
+}

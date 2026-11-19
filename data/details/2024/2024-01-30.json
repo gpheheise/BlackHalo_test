@@ -1,0 +1,3 @@
+{
+"CVE-2024-38470":{"id":"CVE-2024-38470","trackingId":"BH-2023-0001","title":"CSRF on account-recovery flow","vendor":"Initech","product":"Initech Portal","type":"Cross-Site Request Forgery","cwe":"CWE-352","date":"2024-01-30","status":"Fixed","cvss":6.5,"severity":"Medium","cvssVector":"CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N","summary":"The recovery-email change form has no anti-forgery token, so a visited page can redirect a victim's password resets.","repo":"gpheheise/CVE-2024-38470","branch":"main","writeup":"README.md","poc":false,"pocPath":"poc","reported":"2023-11-01T09:00:00Z","acknowledged":"2023-11-03","fixed":"2023-12-14","windowDays":90,"extensions":[],"releasedAt":"2024-01-30T09:00:00Z"}
+}

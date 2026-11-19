@@ -1,0 +1,9 @@
+{"windowDays":90,"fields":["trackingId","type","cwe","cvss","reported","releaseAt","windowDays","ext","ackDay","fixedDay","flags"],"types":["Authentication Bypass","Cross-Site Scripting","Insecure Deserialization","Path Traversal","Remote Code Execution","SQL Injection","Server-Side Request Forgery"],"cwes":["CWE-22","CWE-287","CWE-502","CWE-78","CWE-79","CWE-89","CWE-918"],"extensions":{"BH-2026-0007":[{"days":14,"reason":"Vendor requested two weeks to finish rolling out the patch to managed tenants"}]},"rows":[
+["BH-2026-0005",5,5,8.8,1787475600,1795251600,90,0,2,null,2],
+["BH-2026-0006",0,1,9.1,1788080400,1795856400,90,0,2,45,2],
+["BH-2026-0007",6,6,7.5,1789203600,1798189200,90,14,3,null,0],
+["BH-2026-0008",2,2,9.8,1790758800,1798534800,90,0,2,null,2],
+["BH-2026-0009",3,0,6.5,1792054800,1799830800,90,0,1,12,2],
+["BH-2026-0010",1,4,5.4,1793178000,1800954000,90,0,null,null,0],
+["BH-2026-0011",4,3,9.8,1794646800,1802422800,90,0,3,null,0]
+]}

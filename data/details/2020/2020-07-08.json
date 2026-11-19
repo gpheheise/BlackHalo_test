@@ -1,0 +1,3 @@
+{
+"CVE-2020-28730":{"id":"CVE-2020-28730","trackingId":"BH-2020-0001","title":"Authentication bypass in session cookie handling","vendor":"Globex","product":"Globex VPN Gateway","type":"Authentication Bypass","cwe":"CWE-287","date":"2020-07-08","status":"Fixed","cvss":8.1,"severity":"High","cvssVector":"CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H","summary":"Session cookies are compared with a prefix match, so a truncated forged cookie can be accepted under a race.","repo":"gpheheise/CVE-2020-28730","branch":"main","writeup":"README.md","poc":true,"pocPath":"poc","reported":"2020-04-09T09:00:00Z","acknowledged":"2020-04-13","fixed":"2020-05-20","windowDays":90,"extensions":[],"releasedAt":"2020-07-08T09:00:00Z"}
+}

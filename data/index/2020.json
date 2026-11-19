@@ -1,0 +1,3 @@
+{"fields":["id","trackingId","title","vendor","product","type","cwe","date","cvss","fixedDay","releaseDay","repo","poc"],"types":["Authentication Bypass"],"rows":[
+["CVE-2020-28730","BH-2020-0001","Authentication bypass in session cookie handling","Globex","Globex VPN Gateway",0,"CWE-287","2020-07-08",8.1,41,90,"gpheheise/CVE-2020-28730",1]
+]}

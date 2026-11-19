@@ -1,0 +1,7 @@
+{"fields":["id","trackingId","title","vendor","product","type","cwe","date","cvss","fixedDay","releaseDay","repo","poc"],"types":["Authentication Bypass","Cross-Site Scripting","Insecure Deserialization","Remote Code Execution","Server-Side Request Forgery"],"rows":[
+["CVE-2026-48210","BH-2026-0001","Unauthenticated RCE via server-side template injection","Northwind","Northwind CMS",3,"CWE-1336","2026-10-14",9.8,37,90,"gpheheise/CVE-2026-48210",1],
+["CVE-2026-47188","BH-2026-0002","Authentication bypass in SAML assertion validation","Globex","Globex VPN Gateway",0,"CWE-347","2026-09-02",9.1,35,90,"gpheheise/CVE-2026-47188",1],
+["CVE-2026-46007","BH-2026-0003","SSRF to cloud instance metadata","Soylent","Soylent Cloud Connector",4,"CWE-918","2026-07-21",8.6,36,90,"gpheheise/CVE-2026-46007",1],
+["CVE-2026-44521","BH-2026-0004","Insecure deserialization in background job queue","Vandelay","Vandelay ERP",2,"CWE-502","2026-05-30",9,null,90,"gpheheise/CVE-2026-44521",0],
+["CVE-2026-41993","BH-2025-0001","Stored XSS in admin audit-log viewer","Initech","Initech Mail",1,"CWE-79","2026-03-11",5.4,72,90,"gpheheise/CVE-2026-41993",1]
+]}

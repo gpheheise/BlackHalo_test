@@ -1,0 +1,4 @@
+{"fields":["id","trackingId","title","vendor","product","type","cwe","date","cvss","fixedDay","releaseDay","repo","poc"],"types":["Information Disclosure","SQL Injection"],"rows":[
+["CVE-2022-47330","BH-2022-0001","SQL injection in login handler","Dunder","Dunder VoIP Manager",1,"CWE-89","2022-10-07",9.8,19,90,"gpheheise/CVE-2022-47330",1],
+["CVE-2022-41980","BH-2022-0002","Information disclosure via verbose errors","PiedPiper","Pied Piper Storage",0,"CWE-209","2022-06-14",3.7,18,90,"gpheheise/CVE-2022-41980",0]
+]}

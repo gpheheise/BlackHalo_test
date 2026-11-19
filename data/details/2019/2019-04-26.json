@@ -1,0 +1,3 @@
+{
+"CVE-2019-18867":{"id":"CVE-2019-18867","trackingId":"BH-2019-0001","title":"Memory corruption in protocol state machine","vendor":"Umbrella","product":"Umbrella IoT Hub","type":"Remote Code Execution","cwe":"CWE-787","date":"2019-04-26","status":"Fixed","cvss":8.8,"severity":"High","cvssVector":"CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H","summary":"An out-of-order pairing message drives the radio stack into a state that writes past a fixed-size buffer, reachable from the local network segment.","repo":"gpheheise/CVE-2019-18867","branch":"main","writeup":"README.md","poc":true,"pocPath":"poc","reported":"2019-01-26T09:00:00Z","acknowledged":"2019-01-28","fixed":"2019-04-10","windowDays":90,"extensions":[],"releasedAt":"2019-04-26T09:00:00Z"}
+}

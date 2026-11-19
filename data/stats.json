@@ -1,0 +1,428 @@
+{
+ "version": 3,
+ "released": {
+  "total": 24,
+  "years": {
+   "2019": 1,
+   "2020": 1,
+   "2021": 1,
+   "2022": 2,
+   "2023": 3,
+   "2024": 5,
+   "2025": 6,
+   "2026": 5
+  },
+  "severity": {
+   "Critical": 7,
+   "High": 10,
+   "Medium": 6,
+   "Low": 1
+  },
+  "classes": [
+   [
+    "Remote Code Execution",
+    4
+   ],
+   [
+    "Authentication Bypass",
+    3
+   ],
+   [
+    "Cross-Site Scripting",
+    3
+   ],
+   [
+    "Information Disclosure",
+    2
+   ],
+   [
+    "Insecure Deserialization",
+    2
+   ],
+   [
+    "Path Traversal",
+    2
+   ],
+   [
+    "Privilege Escalation",
+    2
+   ],
+   [
+    "Server-Side Request Forgery",
+    2
+   ],
+   [
+    "SQL Injection",
+    2
+   ],
+   [
+    "Cross-Site Request Forgery",
+    1
+   ],
+   [
+    "XML External Entity",
+    1
+   ]
+  ],
+  "vendors": 11,
+  "vendorsTop": [
+   [
+    "Globex",
+    3
+   ],
+   [
+    "Hooli",
+    3
+   ],
+   [
+    "Dunder",
+    2
+   ]
+  ],
+  "repos": 24,
+  "withRepo": 24,
+  "poc": 15,
+  "cvss": {
+   "avg": 7.7,
+   "min": 3.7,
+   "max": 9.8
+  },
+  "latest": [
+   {
+    "id": "CVE-2026-48210",
+    "trackingId": "BH-2026-0001",
+    "title": "Unauthenticated RCE via server-side template injection",
+    "vendor": "Northwind",
+    "product": "Northwind CMS",
+    "date": "2026-10-14",
+    "releasedAt": "2026-10-14T09:00:00Z",
+    "severity": "Critical",
+    "cvss": 9.8,
+    "repo": "gpheheise/CVE-2026-48210"
+   },
+   {
+    "id": "CVE-2026-47188",
+    "trackingId": "BH-2026-0002",
+    "title": "Authentication bypass in SAML assertion validation",
+    "vendor": "Globex",
+    "product": "Globex VPN Gateway",
+    "date": "2026-09-02",
+    "releasedAt": "2026-09-02T09:00:00Z",
+    "severity": "Critical",
+    "cvss": 9.1,
+    "repo": "gpheheise/CVE-2026-47188"
+   },
+   {
+    "id": "CVE-2026-46007",
+    "trackingId": "BH-2026-0003",
+    "title": "SSRF to cloud instance metadata",
+    "vendor": "Soylent",
+    "product": "Soylent Cloud Connector",
+    "date": "2026-07-21",
+    "releasedAt": "2026-07-21T09:00:00Z",
+    "severity": "High",
+    "cvss": 8.6,
+    "repo": "gpheheise/CVE-2026-46007"
+   },
+   {
+    "id": "CVE-2026-44521",
+    "trackingId": "BH-2026-0004",
+    "title": "Insecure deserialization in background job queue",
+    "vendor": "Vandelay",
+    "product": "Vandelay ERP",
+    "date": "2026-05-30",
+    "releasedAt": "2026-05-30T09:00:00Z",
+    "severity": "Critical",
+    "cvss": 9,
+    "repo": "gpheheise/CVE-2026-44521"
+   },
+   {
+    "id": "CVE-2026-41993",
+    "trackingId": "BH-2025-0001",
+    "title": "Stored XSS in admin audit-log viewer",
+    "vendor": "Initech",
+    "product": "Initech Mail",
+    "date": "2026-03-11",
+    "releasedAt": "2026-03-11T09:00:00Z",
+    "severity": "Medium",
+    "cvss": 5.4,
+    "repo": "gpheheise/CVE-2026-41993"
+   },
+   {
+    "id": "CVE-2025-39902",
+    "trackingId": "BH-2025-0002",
+    "title": "Path traversal in firmware update endpoint",
+    "vendor": "Stark",
+    "product": "Stark Edge Router",
+    "date": "2025-12-08",
+    "releasedAt": "2025-12-08T09:00:00Z",
+    "severity": "High",
+    "cvss": 7.5,
+    "repo": "gpheheise/CVE-2025-39902"
+   }
+  ]
+ },
+ "response": {
+  "released": 24,
+  "fixedBefore": 20,
+  "fixedAfter": 1,
+  "unpatched": 3,
+  "median": 41,
+  "top": 105,
+  "bins": [
+   [
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    5,
+    0,
+    0,
+    0
+   ],
+   [
+    10,
+    0,
+    0,
+    1
+   ],
+   [
+    15,
+    2,
+    0,
+    0
+   ],
+   [
+    20,
+    3,
+    0,
+    0
+   ],
+   [
+    25,
+    1,
+    0,
+    0
+   ],
+   [
+    30,
+    0,
+    0,
+    0
+   ],
+   [
+    35,
+    4,
+    0,
+    0
+   ],
+   [
+    40,
+    2,
+    0,
+    0
+   ],
+   [
+    45,
+    0,
+    0,
+    1
+   ],
+   [
+    50,
+    1,
+    0,
+    0
+   ],
+   [
+    55,
+    0,
+    0,
+    0
+   ],
+   [
+    60,
+    1,
+    0,
+    0
+   ],
+   [
+    65,
+    1,
+    0,
+    0
+   ],
+   [
+    70,
+    3,
+    0,
+    0
+   ],
+   [
+    75,
+    1,
+    0,
+    0
+   ],
+   [
+    80,
+    1,
+    0,
+    0
+   ],
+   [
+    85,
+    0,
+    0,
+    0
+   ],
+   [
+    90,
+    0,
+    0,
+    0
+   ],
+   [
+    95,
+    0,
+    0,
+    0
+   ],
+   [
+    100,
+    0,
+    1,
+    0
+   ]
+  ],
+  "points": [
+   [
+    12,
+    2,
+    "BH-2026-0009"
+   ],
+   [
+    18,
+    0,
+    "CVE-2022-41980"
+   ],
+   [
+    19,
+    0,
+    "CVE-2022-47330"
+   ],
+   [
+    20,
+    0,
+    "CVE-2025-33218"
+   ],
+   [
+    22,
+    0,
+    "CVE-2024-41122"
+   ],
+   [
+    24,
+    0,
+    "CVE-2025-37155"
+   ],
+   [
+    25,
+    0,
+    "CVE-2024-47620"
+   ],
+   [
+    35,
+    0,
+    "CVE-2026-47188"
+   ],
+   [
+    36,
+    0,
+    "CVE-2026-46007"
+   ],
+   [
+    37,
+    0,
+    "CVE-2026-48210"
+   ],
+   [
+    39,
+    0,
+    "CVE-2023-45190"
+   ],
+   [
+    41,
+    0,
+    "CVE-2020-28730"
+   ],
+   [
+    43,
+    0,
+    "CVE-2024-38470"
+   ],
+   [
+    45,
+    2,
+    "BH-2026-0006"
+   ],
+   [
+    52,
+    0,
+    "CVE-2023-48815"
+   ],
+   [
+    64,
+    0,
+    "CVE-2024-49771"
+   ],
+   [
+    67,
+    0,
+    "CVE-2025-30091"
+   ],
+   [
+    72,
+    0,
+    "CVE-2026-41993"
+   ],
+   [
+    73,
+    0,
+    "CVE-2025-38740"
+   ],
+   [
+    74,
+    0,
+    "CVE-2019-18867"
+   ],
+   [
+    77,
+    0,
+    "CVE-2025-39902"
+   ],
+   [
+    83,
+    0,
+    "CVE-2021-39544"
+   ],
+   [
+    104,
+    1,
+    "CVE-2024-44903"
+   ]
+  ]
+ },
+ "index": [
+  "2026",
+  "2025",
+  "2024",
+  "2023",
+  "2022",
+  "2021",
+  "2020",
+  "2019"
+ ]
+}

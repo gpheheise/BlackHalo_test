@@ -1,0 +1,3 @@
+{
+"CVE-2023-41077":{"id":"CVE-2023-41077","trackingId":"BH-2023-0004","title":"Privilege escalation via race condition","vendor":"Wayne","product":"Wayne SCADA Suite","type":"Privilege Escalation","cwe":"CWE-362","date":"2023-05-02","status":"Unpatched","cvss":7,"severity":"High","cvssVector":"CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H","summary":"A time-of-check/time-of-use gap in the backup service lets a local user swap a checked file for a symlink before it is written as root.","repo":"gpheheise/CVE-2023-41077","branch":"main","writeup":"README.md","poc":false,"pocPath":"poc","reported":"2023-02-01T09:00:00Z","acknowledged":"2023-02-05","fixed":null,"windowDays":90,"extensions":[],"releasedAt":"2023-05-02T09:00:00Z"}
+}

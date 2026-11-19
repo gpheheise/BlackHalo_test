@@ -1,0 +1,3 @@
+{
+"CVE-2022-47330":{"id":"CVE-2022-47330","trackingId":"BH-2022-0001","title":"SQL injection in login handler","vendor":"Dunder","product":"Dunder VoIP Manager","type":"SQL Injection","cwe":"CWE-89","date":"2022-10-07","status":"Fixed","cvss":9.8,"severity":"Critical","cvssVector":"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H","summary":"The username field of the legacy login form is concatenated into the credential lookup, allowing pre-authentication database access.","repo":"gpheheise/CVE-2022-47330","branch":"main","writeup":"README.md","poc":true,"pocPath":"poc","reported":"2022-07-09T09:00:00Z","acknowledged":"2022-07-10","fixed":"2022-07-28","windowDays":90,"extensions":[],"releasedAt":"2022-10-07T09:00:00Z"}
+}

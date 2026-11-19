@@ -1,0 +1,7 @@
+{"fields":["id","trackingId","title","vendor","product","type","cwe","date","cvss","fixedDay","releaseDay","repo","poc"],"types":["Authentication Bypass","Cross-Site Request Forgery","Cross-Site Scripting","Remote Code Execution","Server-Side Request Forgery"],"rows":[
+["CVE-2024-49771","BH-2024-0002","Heap overflow in packet decoder","Stark","Stark Edge Router",3,"CWE-122","2024-11-29",9.8,64,90,"gpheheise/CVE-2024-49771",1],
+["CVE-2024-47620","BH-2024-0003","Authentication bypass via JWT algorithm confusion","Globex","Globex Identity",0,"CWE-347","2024-09-10",7.4,25,90,"gpheheise/CVE-2024-47620",1],
+["CVE-2024-44903","BH-2024-0004","SSRF in webhook URL validation","Hooli","Hooli Gateway",4,"CWE-918","2024-06-22",7.5,104,90,"gpheheise/CVE-2024-44903",0],
+["CVE-2024-41122","BH-2024-0005","Reflected XSS in search parameter","Northwind","Northwind CMS",2,"CWE-79","2024-04-05",6.1,22,90,"gpheheise/CVE-2024-41122",0],
+["CVE-2024-38470","BH-2023-0001","CSRF on account-recovery flow","Initech","Initech Portal",1,"CWE-352","2024-01-30",6.5,43,90,"gpheheise/CVE-2024-38470",0]
+]}

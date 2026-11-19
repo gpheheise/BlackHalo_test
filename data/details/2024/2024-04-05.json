@@ -1,0 +1,3 @@
+{
+"CVE-2024-41122":{"id":"CVE-2024-41122","trackingId":"BH-2024-0005","title":"Reflected XSS in search parameter","vendor":"Northwind","product":"Northwind CMS","type":"Cross-Site Scripting","cwe":"CWE-79","date":"2024-04-05","status":"Fixed","cvss":6.1,"severity":"Medium","cvssVector":"CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N","summary":"The search results page reflects the query string into an inline script block without encoding.","repo":"gpheheise/CVE-2024-41122","branch":"main","writeup":"README.md","poc":false,"pocPath":"poc","reported":"2024-01-06T09:00:00Z","acknowledged":"2024-01-08","fixed":"2024-01-28","windowDays":90,"extensions":[],"releasedAt":"2024-04-05T09:00:00Z"}
+}

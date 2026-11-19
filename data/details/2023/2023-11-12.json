@@ -1,0 +1,3 @@
+{
+"CVE-2023-48815":{"id":"CVE-2023-48815","trackingId":"BH-2023-0002","title":"Deserialization RCE in plugin loader","vendor":"Vandelay","product":"Vandelay ERP","type":"Insecure Deserialization","cwe":"CWE-502","date":"2023-11-12","status":"Fixed","cvss":9.8,"severity":"Critical","cvssVector":"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H","summary":"Plugin manifests uploaded through an unauthenticated endpoint are deserialized before their signature is checked.","repo":"gpheheise/CVE-2023-48815","branch":"main","writeup":"README.md","poc":true,"pocPath":"poc","reported":"2023-08-14T09:00:00Z","acknowledged":"2023-08-15","fixed":"2023-10-05","windowDays":90,"extensions":[],"releasedAt":"2023-11-12T09:00:00Z"}
+}

@@ -1,0 +1,11 @@
+{
+  "name": "blackhalo-disclosures",
+  "private": true,
+  "type": "module",
+  "description": "BlackHalo vulnerability disclosure site (GitHub Pages, no build step)",
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "validate:repos": "node scripts/validate.mjs --check-repos",
+    "serve": "python3 -m http.server 8000"
+  }
+}

@@ -1,0 +1,3 @@
+{
+"CVE-2024-47620":{"id":"CVE-2024-47620","trackingId":"BH-2024-0003","title":"Authentication bypass via JWT algorithm confusion","vendor":"Globex","product":"Globex Identity","type":"Authentication Bypass","cwe":"CWE-347","date":"2024-09-10","status":"Fixed","cvss":7.4,"severity":"High","cvssVector":"CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N","summary":"The token verifier accepts the algorithm named in the token header, so a token signed with the public key as an HMAC secret is accepted.","repo":"gpheheise/CVE-2024-47620","branch":"main","writeup":"README.md","poc":true,"pocPath":"poc","reported":"2024-06-12T09:00:00Z","acknowledged":"2024-06-15","fixed":"2024-07-07","windowDays":90,"extensions":[],"releasedAt":"2024-09-10T09:00:00Z"}
+}

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BlackHalo Disclosures</title>
+<!-- CSP:START (GitHub Pages cannot set headers, so the policy ships as a meta tag) -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https://raw.githubusercontent.com https://*.githubusercontent.com https://github.com; connect-src 'self' https://raw.githubusercontent.com; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<!-- CSP:END -->
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="description" content="Vulnerabilities discovered by BlackHalo, the offensive-security platform of Lufthansa Industry Solutions: statistics, coordinated-disclosure writeups and proof-of-concept repositories on GitHub.">
+<meta name="theme-color" content="#05060b">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BlackHalo Disclosures">
+<meta property="og:description" content="Offensive research, responsibly disclosed. A Lufthansa Industry Solutions platform.">
+<meta property="og:image" content="https://gpheheise.github.io/blackhalo/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/img/blackhalo-logo.webp" as="image" type="image/webp">
+<link rel="stylesheet" href="assets/css/site.css">
+<script type="module" src="assets/js/app.js"></script>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<div class="ribbon">
+  <div class="wrap">
+    <span class="bar" aria-hidden="true"></span>
+    <span>A <b>Lufthansa Industry Solutions</b> platform</span>
+    <span class="r-right">Offensive security · Coordinated disclosure</span>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#overview" aria-label="BlackHalo home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#ff3b4a" stroke-width="2.2"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4" stroke="#ff3b4a" stroke-width="1.6"/><circle cx="12" cy="12" r="2.2" fill="#eef0f6"/></svg>
+      <span>Black<span class="h">Halo</span></span>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#clock" id="nav-clock">Disclosure clock</a>
+      <a href="#statistics">Statistics</a>
+      <a href="#disclosures">Disclosures</a>
+      <a href="#repositories">Repositories</a>
+      <a href="#policy">Policy</a>
+    </nav>
+    <div class="top-actions">
+      <button class="search-btn" id="open-palette" type="button" aria-label="Search disclosures">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="7" cy="7" r="5"/><path d="m11 11 3.5 3.5"/></svg>
+        <span class="lbl">Search disclosures</span><kbd id="kbd-hint">⌘K</kbd>
+      </button>
+      <a class="icon-btn" id="gh-site" href="https://github.com/gpheheise/blackhalo" target="_blank" rel="noopener noreferrer" aria-label="BlackHalo on GitHub">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="overview">
+  <div class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <a class="latest" id="latest" href="#disclosures">
+          <span class="pulse" aria-hidden="true"></span>
+          <span class="lid">Latest disclosure</span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg></span>
+        </a>
+        <h1 id="hero-title">Offensive research, <span>responsibly disclosed.</span></h1>
+        <p class="lead">BlackHalo is the offensive-security platform of Lufthansa Industry Solutions. Every vulnerability it finds is validated by a researcher, reported to the vendor and published here, with the full writeup and proof of concept in its own GitHub repository.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#disclosures">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2.5 4h11M2.5 8h11M2.5 12h7"/></svg>
+            Browse disclosures
+          </a>
+          <a class="btn btn-secondary" id="gh-owner" href="https://github.com/gpheheise" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+            Research on GitHub
+          </a>
+        </div>
+        <p class="credit">Created by <b>Georg Ph. E. Heise</b> · Lufthansa Industry Solutions</p>
+      </div>
+      <div class="hero-art">
+        <div class="crosshair" aria-hidden="true"></div>
+        <div class="logo-glitch">
+          <picture>
+            <source srcset="assets/img/blackhalo-logo.webp" type="image/webp">
+            <img src="assets/img/blackhalo-logo.png" width="1000" height="827" alt="BlackHalo — Offensive Security Platform">
+          </picture>
+          <span class="lg-ghost r" aria-hidden="true"></span>
+          <span class="lg-ghost b" aria-hidden="true"></span>
+          <span class="lg-scan" aria-hidden="true"></span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap"><div class="rule"></div></div>
+
+  <div class="wrap">
+    <section id="clock" aria-labelledby="clock-title" hidden>
+      <div class="sec-head">
+        <div>
+          <div class="kicker" id="clock-kicker">Coordinated disclosure</div>
+          <h2 id="clock-title">Disclosure clock</h2>
+          <p>Every finding is listed here the day its vendor is notified. Vendor and product stay withheld while the 90-day clock runs; when it reaches zero the full record and writeup are published, fixed or not.</p>
+        </div>
+      </div>
+      <div class="clock-stats" id="clock-stats"></div>
+      <article class="runway-card" aria-labelledby="forecast-title">
+        <div class="runway-head">
+          <h3 id="forecast-title">Full-disclosure forecast</h3>
+          <span class="sub" id="forecast-sub"></span>
+          <span class="ramp" aria-hidden="true"><span>1 day left</span><i></i><span>90 days</span></span>
+        </div>
+        <p class="fc-hint">Releases per day. Select a day to list its findings.</p>
+        <div class="forecast" id="forecast"></div>
+        <div class="months" id="release-months" aria-label="Releases by month"></div>
+      </article>
+
+      <div class="board" id="board">
+        <div class="board-head">
+          <div class="tabs" role="tablist" aria-label="Order" id="clock-tabs">
+            <button type="button" role="tab" data-tab="next" aria-selected="true">Next to disclose</button>
+            <button type="button" role="tab" data-tab="newest" aria-selected="false">Newest</button>
+            <button type="button" role="tab" data-tab="fixed" aria-selected="false">Recently fixed</button>
+            <button type="button" role="tab" data-tab="cvss" aria-selected="false">Highest CVSS</button>
+          </div>
+          <div class="board-filters">
+            <label class="field field-sm" for="cq">
+              <span class="sr">Filter findings under embargo</span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="7" cy="7" r="5"/><path d="m11 11 3.5 3.5"/></svg>
+              <input id="cq" type="search" placeholder="ID, class or CWE" autocomplete="off">
+            </label>
+            <div class="select"><label class="sr" for="c-sev">Severity</label><select id="c-sev"></select></div>
+            <div class="select"><label class="sr" for="c-class">Class</label><select id="c-class"></select></div>
+            <div class="select"><label class="sr" for="c-status">Status</label><select id="c-status"></select></div>
+            <div class="views" role="group" aria-label="Layout">
+              <button type="button" id="c-view-grid" aria-pressed="true" aria-label="Card view"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg></button>
+              <button type="button" id="c-view-list" aria-pressed="false" aria-label="List view"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <div class="resbar">
+          <span id="board-count" aria-live="polite"></span>
+          <span class="day-chip" id="board-day" hidden><span></span><button type="button" aria-label="Show all days">×</button></span>
+          <button type="button" class="linkbtn" id="board-clear" hidden>Clear filters</button>
+        </div>
+        <div class="board-layout">
+          <div>
+            <div class="embargo-grid" id="embargo-grid"></div>
+            <button type="button" class="more" id="board-more" hidden>Show more</button>
+          </div>
+          <aside class="feed" aria-labelledby="feed-title">
+            <h3 id="feed-title">Latest activity</h3>
+            <ol class="feed-list" id="feed-list"></ol>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap" id="clock-rule"><div class="rule"></div></div>
+
+  <div class="wrap" id="stats-wrap">
+    <section id="statistics" aria-labelledby="stats-title">
+      <div class="sec-head">
+        <div>
+          <div class="kicker" id="stats-kicker">data/stats.json</div>
+          <h2 id="stats-title">By the numbers</h2>
+          <p>Every figure is computed from the disclosure dataset, so adding a finding updates the whole page.</p>
+        </div>
+      </div>
+      <div class="bento">
+        <article class="tile t-total">
+          <h3>Vulnerabilities disclosed</h3>
+          <div class="hero-fig" id="fig-total">–</div>
+          <p class="sub" id="sub-total"></p>
+          <div class="cols" id="chart-years" role="group" aria-label="CVEs published per year"></div>
+        </article>
+        <article class="tile t-sev">
+          <h3>Severity (CVSS v3.1)</h3>
+          <p class="sub" id="sub-sev"></p>
+          <div class="seg-bar" id="chart-sev" role="group" aria-label="CVEs by severity"></div>
+          <div class="legend" id="legend-sev"></div>
+        </article>
+        <article class="tile t-cvss">
+          <h3>Average base score</h3>
+          <div class="fig num" id="fig-cvss">–</div>
+          <div class="scale" id="chart-cvss" aria-hidden="true"><div class="bands"><i></i><i></i><i></i><i></i></div><span class="mark" id="cvss-mark"></span><div class="ticks"><span>0</span><span>4</span><span>7</span><span>9</span><span>10</span></div></div>
+        </article>
+        <article class="tile t-poc">
+          <h3>Public proof of concept</h3>
+          <div class="fig" id="fig-poc">–</div>
+          <div class="meter" id="meter-poc" role="img"><i id="meter-poc-fill"></i></div>
+          <p class="sub" id="sub-poc"></p>
+        </article>
+        <article class="tile t-cls">
+          <h3>Vulnerability classes</h3>
+          <p class="sub">Top weakness classes by number of CVEs</p>
+          <div class="ranked" id="chart-cls"></div>
+        </article>
+        <article class="tile t-vend">
+          <h3>Vendors affected</h3>
+          <div class="fig" id="fig-vend">–</div>
+          <div class="mini-list" id="list-vend"></div>
+        </article>
+        <article class="tile t-repo">
+          <h3>Research repositories</h3>
+          <div class="fig" id="fig-repo">–</div>
+          <p class="sub" id="sub-repo"></p>
+        </article>
+        <article class="tile t-resp">
+          <div class="resp-figs">
+            <div><h3>Median time to fix</h3><div class="fig num" id="fig-ttf">–</div><p class="sub">report to vendor patch</p></div>
+            <div><h3>Fixed before disclosure</h3><div class="fig num" id="fig-inwin">–</div><p class="sub" id="sub-inwin"></p></div>
+            <div><h3>Disclosed unpatched</h3><div class="fig num" id="fig-unp">–</div><p class="sub" id="sub-unp"></p></div>
+          </div>
+          <div class="resp-chart">
+            <h3>Day of the window on which each vendor shipped a fix</h3>
+            <div class="strip" id="chart-ttf" role="group" aria-label="Fix day per finding"></div>
+            <div class="legend sp-legend"><span><i class="lg-ok"></i>Fixed before disclosure</span><span><i class="lg-late"></i>Fixed after disclosure</span><span><i class="lg-emb"></i>Fixed, still under embargo</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap" id="stats-rule"><div class="rule"></div></div>
+
+  <div class="wrap">
+    <section id="disclosures" aria-labelledby="disc-title">
+      <div class="sec-head">
+        <div>
+          <div class="kicker" id="disc-kicker">Disclosures</div>
+          <h2 id="disc-title">Disclosure index</h2>
+          <p>Open a disclosure to read its writeup, loaded from the linked GitHub repository, with the CVSS breakdown and links to the proof of concept and NVD.</p>
+        </div>
+      </div>
+
+      <div class="notice" id="demo-notice">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.2v4M8 4.8v.1"/></svg>
+        <div><b>Demo dataset.</b> These entries and the disclosure clock use fictional vendors to preview the design. Replace the vault's demo findings with BlackHalo's own and publish, then delete this notice in <code>index.html</code>.</div>
+      </div>
+
+      <div class="toolbar" role="search">
+        <label class="field" for="q">
+          <span class="sr">Filter disclosures</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="7" cy="7" r="5"/><path d="m11 11 3.5 3.5"/></svg>
+          <input id="q" type="search" placeholder="Filter by CVE, vendor, product or class" autocomplete="off">
+        </label>
+        <div class="seg" id="seg-sev" role="group" aria-label="Severity"></div>
+        <div class="select"><label class="sr" for="f-year">Year</label><select id="f-year"></select></div>
+        <div class="select"><label class="sr" for="f-class">Class</label><select id="f-class"></select></div>
+        <label class="check" for="f-poc"><input id="f-poc" type="checkbox"> Has PoC</label>
+        <div class="select"><label class="sr" for="f-sort">Sort</label>
+          <select id="f-sort">
+            <option value="date-desc">Newest first</option>
+            <option value="date-asc">Oldest first</option>
+            <option value="cvss-desc">Highest CVSS</option>
+            <option value="cvss-asc">Lowest CVSS</option>
+          </select>
+        </div>
+        <div class="views" role="group" aria-label="Layout">
+          <button type="button" id="v-grid" aria-pressed="true" aria-label="Card view"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg></button>
+          <button type="button" id="v-list" aria-pressed="false" aria-label="List view"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"/></svg></button>
+        </div>
+      </div>
+
+      <div class="resbar">
+        <span id="res-count" aria-live="polite"></span>
+        <button type="button" class="linkbtn" id="clear-filters" hidden>Clear filters</button>
+      </div>
+      <div class="cards" id="cards"></div>
+      <button type="button" class="more" id="index-more" hidden>Show more</button>
+    </section>
+  </div>
+
+  <div class="wrap"><div class="rule"></div></div>
+
+  <div class="wrap">
+    <section id="repositories" aria-labelledby="repo-title">
+      <div class="sec-head">
+        <div>
+          <div class="kicker">One repository per disclosure</div>
+          <h2 id="repo-title">Research on GitHub</h2>
+          <p>Each disclosure has its own public repository. Its README is the writeup shown on this site, and its <code class="mono">poc/</code> folder holds the proof of concept.</p>
+        </div>
+      </div>
+      <div class="repo-grid">
+        <div>
+          <div class="tree" id="repo-tree" aria-label="Layout of a research repository"><span class="r" id="tree-name">gpheheise/CVE-2026-48210</span>
+├── <span class="d">README.md</span>        <span class="c"># writeup, rendered on this site</span>
+├── <span class="d">poc/</span>
+│   ├── README.md     <span class="c"># setup and expected result</span>
+│   └── exploit.py
+└── LICENSE</div>
+          <p class="repo-explain">Writeups are fetched from the repository when you open a disclosure, so fixing a typo on GitHub updates this site without a redeploy.</p>
+        </div>
+        <div class="repo-list" id="repo-list" aria-label="Recently published repositories"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap"><div class="rule"></div></div>
+
+  <div class="wrap">
+    <section id="policy" aria-labelledby="policy-title">
+      <div class="sec-head">
+        <div>
+          <div class="kicker">Coordinated disclosure</div>
+          <h2 id="policy-title">From finding to publication</h2>
+          <p>Nothing appears here before the vendor has had the chance to fix it.</p>
+        </div>
+      </div>
+      <ol class="steps">
+        <li class="step"><span class="no">01</span><h3>Discover</h3><p>The agent engine maps attack surface and chains primitives across real targets.</p></li>
+        <li class="step"><span class="no">02</span><h3>Validate</h3><p>A researcher reproduces and triages every candidate before it is counted.</p></li>
+        <li class="step"><span class="no">03</span><h3>Notify</h3><p>The vendor is contacted privately with details and a proof of concept.</p></li>
+        <li class="step"><span class="no">04</span><h3>Remediate</h3><p>A 90-day window, extended in good faith while a fix is in progress.</p></li>
+        <li class="step red"><span class="no">05</span><h3>Publish</h3><p>CVE, writeup and minimal PoC go public once a fix ships or the deadline passes.</p></li>
+      </ol>
+      <div class="report">
+        <p><b>Reporting an issue to us?</b> See SECURITY.md for contact details, our PGP key and the scope we accept reports for.</p>
+        <a class="btn btn-secondary" id="security-link" href="https://github.com/gpheheise/blackhalo/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Read SECURITY.md</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="#overview"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#ff3b4a" stroke-width="2.2"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4" stroke="#ff3b4a" stroke-width="1.6"/><circle cx="12" cy="12" r="2.2" fill="#eef0f6"/></svg><span>Black<span class="h">Halo</span></span></a>
+        <p>Offensive-security platform and vulnerability-disclosure record. Created by Georg Ph. E. Heise.</p>
+        <span class="lh-lock"><span class="bar" aria-hidden="true"></span>Lufthansa Industry Solutions</span>
+        <span class="tagline">Think digital. Act digital. Together.</span>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <nav aria-label="Explore"><a href="#statistics">Statistics</a><a href="#disclosures">Disclosure index</a><a href="#repositories">Research repositories</a></nav>
+      </div>
+      <div>
+        <h4>Disclosure</h4>
+        <nav aria-label="Disclosure"><a href="#policy">Policy</a><a id="foot-security" href="https://github.com/gpheheise/blackhalo/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">SECURITY.md</a><a href="https://nvd.nist.gov/" target="_blank" rel="noopener noreferrer">NVD</a></nav>
+      </div>
+      <div>
+        <h4>Source</h4>
+        <nav aria-label="Source"><a id="foot-repo" href="https://github.com/gpheheise/blackhalo" target="_blank" rel="noopener noreferrer">Site repository</a><a id="foot-data" href="https://github.com/gpheheise/blackhalo/tree/main/data" target="_blank" rel="noopener noreferrer">Data files</a></nav>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> BlackHalo · Georg Ph. E. Heise</span>
+      <span>A Lufthansa Industry Solutions platform</span>
+    </div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="d-title" inert>
+  <div class="d-head">
+    <div class="crumbs" id="d-crumbs"></div>
+    <button class="icon-btn" type="button" id="d-copy" aria-label="Copy link to this disclosure"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></button>
+    <button class="icon-btn" type="button" id="d-close" aria-label="Close writeup"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg></button>
+  </div>
+  <div class="d-body" id="d-body"></div>
+</aside>
+
+<dialog class="palette" id="palette" aria-label="Search disclosures">
+  <div class="pal-in">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="7" cy="7" r="5"/><path d="m11 11 3.5 3.5"/></svg>
+    <input id="pal-q" type="text" placeholder="Search CVE ID, vendor, product or class" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="pal-list" aria-label="Search disclosures">
+  </div>
+  <ul class="pal-list" id="pal-list" role="listbox" aria-label="Results"></ul>
+  <div class="pal-foot"><span><kbd>↑</kbd><kbd>↓</kbd>move</span><span><kbd>↵</kbd>open writeup</span><span><kbd>esc</kbd>close</span></div>
+</dialog>
+
+<div id="tip" role="tooltip"><div class="tt"></div><div class="tb"></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
