@@ -136,15 +136,16 @@ async function init() {
   if (emb) loadEmbargo(emb);
   if (!STATS && !EMB.length) return;
   renderLatest();
+  renderReleaseNote();
   renderClock();
   if (STATS?.released?.total) {
     renderStats();
     renderResponse();
-    renderRepos();
   } else {
     $("#statistics").hidden = true;
     $("#stats-rule").hidden = true;
   }
+  renderRepos();
   startTicker();
   initIndex();
   route();
@@ -345,9 +346,7 @@ function renderBoard() {
     : `<div class="empty"><p>${CB.tab === "fixed" && !boardFiltered() ? "No vendor has shipped a fix for a finding under embargo yet." : "No findings under embargo match these filters."}</p>${boardFiltered() ? '<button type="button" class="linkbtn" data-cclear>Clear filters</button>' : ""}</div>`;
   $$(".ecard", grid).forEach((card) => {
     const h = hashOf(card.dataset.eid);
-    const [a, b] = $$(".redact span", card);
-    a.style.width = `${54 + (h % 32)}%`;
-    b.style.width = `${30 + ((h >> 5) % 28)}%`;
+    $(".redact span", card).style.width = `${58 + (h % 34)}%`;
   });
   $("#board-count").innerHTML = `Showing <b>${num(shown.length)}</b> of <b>${num(list.length)}</b>${list.length !== EMB.length ? ` · ${num(EMB.length)} under embargo` : " under embargo"}`;
   const chip = $("#board-day");
@@ -373,7 +372,7 @@ function embargoCard(e) {
   const l = e.life;
   return `<a class="ecard s-${e.severity}" href="#${e.slug}" data-eid="${e.slug}" data-until="${l.releaseAt}" data-kind="tone" aria-label="${esc(`${e.trackingId}: ${e.type}, ${e.severity} ${e.cvss.toFixed(1)}. Vendor and product withheld until ${whenFmt.format(l.releaseAt)}.`)}">
     <div class="e-top"><span class="e-id">${esc(e.trackingId)}</span><span class="sev"><i></i>${esc(e.severity)}</span><span class="score num">${e.cvss.toFixed(1)}<small>CVSS</small></span></div>
-    <div class="redact" aria-hidden="true"><span></span><span></span></div>
+    <div class="redact" aria-hidden="true"><span></span></div>
     <div class="e-class">${esc(e.type)}${e.cwe ? ` <span>· ${esc(e.cwe)}</span>` : ""}</div>
     <div class="e-clock">
       <div class="cd" data-until="${l.releaseAt}" data-mode="full">${countdownHTML(l.releaseAt - Date.now())}</div>
@@ -634,7 +633,7 @@ function renderCards() {
   const total = STATS?.released?.total ?? 0;
   const more = $("#index-more");
   if (!total) {
-    el.innerHTML = `<div class="empty"><p>No disclosures have been published yet. Findings under embargo are listed in the disclosure clock above.</p></div>`;
+    el.innerHTML = `<div class="empty"><p>No disclosures have been published yet.${EMB.length ? " Findings under embargo are listed in the disclosure clock above." : ""}</p></div>`;
     $("#res-count").textContent = "";
     more.hidden = true;
     return;
@@ -653,6 +652,17 @@ function renderCards() {
 }
 
 /* ---------- hero ---------- */
+/** "Releases go out once a day at 09:00", in the visitor's own time zone. */
+function renderReleaseNote() {
+  const t = STATS?.clock?.releaseTimeUtc;
+  const m = /^(\d{2}):(\d{2})$/.exec(t ?? "");
+  if (!m) return;
+  const now = new Date();
+  const next = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), +m[1], +m[2]);
+  const local = new Intl.DateTimeFormat(undefined, { hour: "numeric", minute: "2-digit", timeZoneName: "short" }).format(next);
+  $("#release-note").textContent = ` Releases go out once a day, at ${local}.`;
+}
+
 function renderLatest() {
   const a = $("#latest");
   const next = EMB.find((e) => !e.hold);
@@ -663,7 +673,7 @@ function renderLatest() {
     return;
   }
   const c = STATS?.released?.latest?.[0];
-  if (!c) return;
+  if (!c) { a.hidden = true; return; }
   a.href = `#${String(c.id).toLowerCase()}`;
   a.setAttribute("aria-label", `Latest disclosure: ${c.id}, ${c.title}`);
   a.innerHTML = `<span class="pulse" aria-hidden="true"></span><span class="lid">${esc(c.id)}</span><span class="lt">${esc(c.product)} · ${esc(c.severity)} ${Number(c.cvss).toFixed(1)}</span><span class="go">${ICON.go}</span>`;
@@ -679,7 +689,7 @@ function renderStats() {
   $("#disc-kicker").textContent = `${plural(n, "disclosure")} · ${minY}–${maxY}`;
   $("#fig-total").textContent = num(n);
   $("#sub-total").textContent = `confirmed vulnerabilities published since ${minY}`;
-  renderYears(R.years, minY, maxY);
+  renderPeriods(R.months ?? {}, STATS.chart?.startMonth);
 
   const counts = SEVERITIES.map((s) => [s, R.severity[s] ?? 0]).filter(([, k]) => k > 0);
   $("#chart-sev").replaceChildren(...counts.map(([s, k]) => {
@@ -733,15 +743,70 @@ function renderStats() {
   $("#sub-repo").textContent = `${num(R.withRepo)} of ${num(n)} disclosures link a writeup on GitHub`;
 }
 
-function renderYears(counts, minY, maxY) {
-  const years = [];
-  for (let y = minY; y <= maxY; y++) years.push([String(y), counts[y] ?? 0]);
-  const max = Math.max(...years.map(([, k]) => k));
+const MONTH_SHORT = new Intl.DateTimeFormat("en-US", { month: "short", timeZone: "UTC" });
+const MONTH_LONG = new Intl.DateTimeFormat("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
+
+/**
+ * Disclosures per period, from the chart's start month (settings.json in the vault) to the end of the
+ * current quarter. Up to 10 months are shown one by one; beyond that they are summed per quarter,
+ * and beyond 12 quarters per year. The range grows by itself as time passes.
+ */
+function periodBuckets(months, startMonth, now = new Date()) {
+  const keys = Object.keys(months).sort();
+  const start = startMonth || keys[0];
+  if (!start) return null;
+  const idx = (k) => { const [y, m] = k.split("-").map(Number); return y * 12 + m - 1; };
+  const sIdx = idx(start);
+  const nowIdx = now.getUTCFullYear() * 12 + now.getUTCMonth();
+  const quarterEnd = nowIdx - (nowIdx % 3) + 2;
+  const eIdx = Math.max(quarterEnd, sIdx, keys.length ? idx(keys[keys.length - 1]) : sIdx);
+  const monthsList = [];
+  for (let i = sIdx; i <= eIdx; i++) {
+    const y = Math.floor(i / 12), m = i % 12;
+    monthsList.push({ first: i, last: i, y, k: months[`${y}-${String(m + 1).padStart(2, "0")}`] ?? 0,
+      label: MONTH_SHORT.format(Date.UTC(y, m, 1)), title: MONTH_LONG.format(Date.UTC(y, m, 1)), mark: i === sIdx || m === 0 });
+  }
+  const group = (list, keyOf, make) => {
+    const out = new Map();
+    for (const x of list) {
+      const key = keyOf(x);
+      const b = out.get(key) ?? { ...make(x), first: x.first, k: 0 };
+      b.last = x.last; b.k += x.k;
+      out.set(key, b);
+    }
+    return [...out.values()];
+  };
+  let unit = "month", buckets = monthsList;
+  if (buckets.length > 10) {
+    unit = "quarter";
+    buckets = group(monthsList, (x) => Math.floor(x.first / 3), (x) => {
+      const q = Math.floor((x.first % 12) / 3) + 1;
+      return { y: x.y, label: `Q${q}`, title: `Q${q} ${x.y}`, mark: x.first === sIdx || q === 1 };
+    });
+  }
+  if (unit === "quarter" && buckets.length > 12) {
+    unit = "year";
+    buckets = group(monthsList, (x) => x.y, (x) => ({ y: x.y, label: String(x.y), title: String(x.y), mark: false }));
+  }
+  for (const b of buckets) {
+    b.future = b.first > nowIdx;
+    b.current = b.first <= nowIdx && b.last >= nowIdx;
+  }
+  return { unit, buckets, range: `${buckets[0].title} – ${buckets[buckets.length - 1].title}` };
+}
+
+function renderPeriods(months, startMonth) {
+  const root = $("#chart-years");
+  const P = periodBuckets(months, startMonth);
+  if (!P) { root.hidden = true; $("#cap-periods").hidden = true; return; }
+  const { unit, buckets } = P;
+  const max = Math.max(1, ...buckets.map((b) => b.k));
   const ticks = niceTicks(max, 3);
   const top = ticks[ticks.length - 1];
-  const lastIdx = years.length - 1;
-  const maxIdx = years.findIndex(([, k]) => k === max);
-  const root = $("#chart-years");
+  const past = buckets.filter((b) => !b.future);
+  const lastIdx = buckets.indexOf(past[past.length - 1]);
+  const maxIdx = buckets.findIndex((b) => b.k === max);
+  root.setAttribute("aria-label", `CVEs published per ${unit}, ${P.range}`);
   root.innerHTML = '<div class="yax"></div><div class="plot"><div class="area"></div><div class="xax"></div></div>';
   const yax = $(".yax", root), area = $(".area", root), xax = $(".xax", root);
   ticks.forEach((t) => {
@@ -756,28 +821,34 @@ function renderYears(counts, minY, maxY) {
       area.append(g);
     }
   });
-  years.forEach(([y, k], i) => {
+  buckets.forEach((b, i) => {
     const col = document.createElement("div");
-    col.className = "col";
+    col.className = `col${b.future ? " future" : ""}`;
     col.tabIndex = 0;
-    col.dataset.tipTitle = y;
-    col.dataset.tipBody = `${plural(k, "CVE")} published`;
-    col.setAttribute("aria-label", `${y}: ${plural(k, "CVE")}`);
+    col.dataset.tipTitle = b.title;
+    col.dataset.tipBody = b.future ? "Upcoming" : `${plural(b.k, "CVE")} published${b.current ? " so far" : ""}`;
+    col.setAttribute("aria-label", `${b.title}: ${b.future ? "upcoming" : plural(b.k, "CVE")}`);
     const bar = document.createElement("div");
     bar.className = "bar";
-    bar.style.height = `${(k / top) * 100}%`;
-    if (k > 0 && (i === lastIdx || i === maxIdx)) {
+    if (!b.future) bar.style.height = `${(b.k / top) * 100}%`;
+    if (b.k > 0 && (i === lastIdx || i === maxIdx)) {
       const cap = document.createElement("span");
       cap.className = "cap";
-      cap.textContent = num(k);
+      cap.textContent = num(b.k);
       bar.append(cap);
     }
     col.append(bar);
     area.append(col);
     const lab = document.createElement("span");
-    lab.textContent = years.length > 10 ? `’${y.slice(2)}` : y;
+    lab.textContent = b.label;
+    if (b.mark) {
+      const yr = document.createElement("small");
+      yr.textContent = b.y;
+      lab.append(yr);
+    }
     xax.append(lab);
   });
+  $("#cap-periods").textContent = `Per ${unit} · ${P.range}`;
 }
 
 function fitSegLabels() {
@@ -866,7 +937,7 @@ function renderResponse() {
 
 /* ---------- repositories ---------- */
 function renderRepos() {
-  const withRepo = (STATS.released.latest ?? []).filter((c) => SAFE.repo.test(c.repo ?? ""));
+  const withRepo = (STATS?.released?.latest ?? []).filter((c) => SAFE.repo.test(c.repo ?? ""));
   if (withRepo[0]) $("#tree-name").textContent = withRepo[0].repo;
   $("#repo-list").innerHTML = withRepo.map((c) => `<a class="repo-row s-${esc(c.severity)}" href="https://github.com/${esc(c.repo)}" target="_blank" rel="noopener noreferrer">
     ${ICON.gh}<span class="r-text"><span class="rn">${esc(c.repo)}</span><span class="rd">${esc(c.title)} · ${fmtDate(c.date)}</span></span>

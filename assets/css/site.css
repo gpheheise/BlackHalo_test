@@ -274,8 +274,11 @@ section { padding: 56px 0; }
 .cards.list .l-main { min-width: 0; }
 .cards.list .l-main .c-title, .cards.list .l-main .c-meta { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cards.list .score small { display: none; }
-.cols .yax { margin-bottom: 24px; }
-.cols .xax { height: 24px; }
+.cols .yax { margin-bottom: 38px; }
+.cols .xax { height: 38px; line-height: 1.25; }
+.cols .xax small { display: block; font-size: 10px; color: var(--ink-3); opacity: 0.75; }
+.cols .col.future .bar { height: 6px; min-height: 0; background: transparent; border: 1px dashed var(--line-2); border-bottom: 0; }
+.cols-cap { margin-top: 12px; }
 .steps { list-style: none; }
 .repo-row .r-text { min-width: 0; }
 .repo-row .rn, .repo-row .rd { display: block; }

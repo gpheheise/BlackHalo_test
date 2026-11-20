@@ -39,8 +39,8 @@
       <span>Black<span class="h">Halo</span></span>
     </a>
     <nav class="nav" aria-label="Sections">
-      <a href="#clock" id="nav-clock">Disclosure clock</a>
       <a href="#statistics">Statistics</a>
+      <a href="#clock" id="nav-clock">Disclosure clock</a>
       <a href="#disclosures">Disclosures</a>
       <a href="#repositories">Repositories</a>
       <a href="#policy">Policy</a>
@@ -97,13 +97,80 @@
 
   <div class="wrap"><div class="rule"></div></div>
 
+  <div class="wrap" id="stats-wrap">
+    <section id="statistics" aria-labelledby="stats-title">
+      <div class="sec-head">
+        <div>
+          <div class="kicker" id="stats-kicker">data/stats.json</div>
+          <h2 id="stats-title">By the numbers</h2>
+          <p>Every figure is computed from the disclosure dataset, so adding a finding updates the whole page.</p>
+        </div>
+      </div>
+      <div class="bento">
+        <article class="tile t-total">
+          <h3>Vulnerabilities disclosed</h3>
+          <div class="hero-fig" id="fig-total">–</div>
+          <p class="sub" id="sub-total"></p>
+          <div class="cols" id="chart-years" role="group" aria-label="CVEs published per month"></div>
+          <p class="sub cols-cap" id="cap-periods"></p>
+        </article>
+        <article class="tile t-sev">
+          <h3>Severity (CVSS v3.1)</h3>
+          <p class="sub" id="sub-sev"></p>
+          <div class="seg-bar" id="chart-sev" role="group" aria-label="CVEs by severity"></div>
+          <div class="legend" id="legend-sev"></div>
+        </article>
+        <article class="tile t-cvss">
+          <h3>Average base score</h3>
+          <div class="fig num" id="fig-cvss">–</div>
+          <div class="scale" id="chart-cvss" aria-hidden="true"><div class="bands"><i></i><i></i><i></i><i></i></div><span class="mark" id="cvss-mark"></span><div class="ticks"><span>0</span><span>4</span><span>7</span><span>9</span><span>10</span></div></div>
+        </article>
+        <article class="tile t-poc">
+          <h3>Public proof of concept</h3>
+          <div class="fig" id="fig-poc">–</div>
+          <div class="meter" id="meter-poc" role="img"><i id="meter-poc-fill"></i></div>
+          <p class="sub" id="sub-poc"></p>
+        </article>
+        <article class="tile t-cls">
+          <h3>Vulnerability classes</h3>
+          <p class="sub">Top weakness classes by number of CVEs</p>
+          <div class="ranked" id="chart-cls"></div>
+        </article>
+        <article class="tile t-vend">
+          <h3>Vendors affected</h3>
+          <div class="fig" id="fig-vend">–</div>
+          <div class="mini-list" id="list-vend"></div>
+        </article>
+        <article class="tile t-repo">
+          <h3>Research repositories</h3>
+          <div class="fig" id="fig-repo">–</div>
+          <p class="sub" id="sub-repo"></p>
+        </article>
+        <article class="tile t-resp">
+          <div class="resp-figs">
+            <div><h3>Median time to fix</h3><div class="fig num" id="fig-ttf">–</div><p class="sub">report to vendor patch</p></div>
+            <div><h3>Fixed before disclosure</h3><div class="fig num" id="fig-inwin">–</div><p class="sub" id="sub-inwin"></p></div>
+            <div><h3>Disclosed unpatched</h3><div class="fig num" id="fig-unp">–</div><p class="sub" id="sub-unp"></p></div>
+          </div>
+          <div class="resp-chart">
+            <h3>Day of the window on which each vendor shipped a fix</h3>
+            <div class="strip" id="chart-ttf" role="group" aria-label="Fix day per finding"></div>
+            <div class="legend sp-legend"><span><i class="lg-ok"></i>Fixed before disclosure</span><span><i class="lg-late"></i>Fixed after disclosure</span><span><i class="lg-emb"></i>Fixed, still under embargo</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap" id="stats-rule"><div class="rule"></div></div>
+
   <div class="wrap">
     <section id="clock" aria-labelledby="clock-title" hidden>
       <div class="sec-head">
         <div>
           <div class="kicker" id="clock-kicker">Coordinated disclosure</div>
           <h2 id="clock-title">Disclosure clock</h2>
-          <p>Every finding is listed here the day its vendor is notified. Vendor and product stay withheld while the 90-day clock runs; when it reaches zero the full record and writeup are published, fixed or not.</p>
+          <p>Every finding is listed here the day its vendor is notified. Vendor and product stay withheld while the 90-day clock runs; when it reaches zero the full record and writeup are published, fixed or not.<span id="release-note"></span></p>
         </div>
       </div>
       <div class="clock-stats" id="clock-stats"></div>
@@ -162,72 +229,6 @@
 
   <div class="wrap" id="clock-rule"><div class="rule"></div></div>
 
-  <div class="wrap" id="stats-wrap">
-    <section id="statistics" aria-labelledby="stats-title">
-      <div class="sec-head">
-        <div>
-          <div class="kicker" id="stats-kicker">data/stats.json</div>
-          <h2 id="stats-title">By the numbers</h2>
-          <p>Every figure is computed from the disclosure dataset, so adding a finding updates the whole page.</p>
-        </div>
-      </div>
-      <div class="bento">
-        <article class="tile t-total">
-          <h3>Vulnerabilities disclosed</h3>
-          <div class="hero-fig" id="fig-total">–</div>
-          <p class="sub" id="sub-total"></p>
-          <div class="cols" id="chart-years" role="group" aria-label="CVEs published per year"></div>
-        </article>
-        <article class="tile t-sev">
-          <h3>Severity (CVSS v3.1)</h3>
-          <p class="sub" id="sub-sev"></p>
-          <div class="seg-bar" id="chart-sev" role="group" aria-label="CVEs by severity"></div>
-          <div class="legend" id="legend-sev"></div>
-        </article>
-        <article class="tile t-cvss">
-          <h3>Average base score</h3>
-          <div class="fig num" id="fig-cvss">–</div>
-          <div class="scale" id="chart-cvss" aria-hidden="true"><div class="bands"><i></i><i></i><i></i><i></i></div><span class="mark" id="cvss-mark"></span><div class="ticks"><span>0</span><span>4</span><span>7</span><span>9</span><span>10</span></div></div>
-        </article>
-        <article class="tile t-poc">
-          <h3>Public proof of concept</h3>
-          <div class="fig" id="fig-poc">–</div>
-          <div class="meter" id="meter-poc" role="img"><i id="meter-poc-fill"></i></div>
-          <p class="sub" id="sub-poc"></p>
-        </article>
-        <article class="tile t-cls">
-          <h3>Vulnerability classes</h3>
-          <p class="sub">Top weakness classes by number of CVEs</p>
-          <div class="ranked" id="chart-cls"></div>
-        </article>
-        <article class="tile t-vend">
-          <h3>Vendors affected</h3>
-          <div class="fig" id="fig-vend">–</div>
-          <div class="mini-list" id="list-vend"></div>
-        </article>
-        <article class="tile t-repo">
-          <h3>Research repositories</h3>
-          <div class="fig" id="fig-repo">–</div>
-          <p class="sub" id="sub-repo"></p>
-        </article>
-        <article class="tile t-resp">
-          <div class="resp-figs">
-            <div><h3>Median time to fix</h3><div class="fig num" id="fig-ttf">–</div><p class="sub">report to vendor patch</p></div>
-            <div><h3>Fixed before disclosure</h3><div class="fig num" id="fig-inwin">–</div><p class="sub" id="sub-inwin"></p></div>
-            <div><h3>Disclosed unpatched</h3><div class="fig num" id="fig-unp">–</div><p class="sub" id="sub-unp"></p></div>
-          </div>
-          <div class="resp-chart">
-            <h3>Day of the window on which each vendor shipped a fix</h3>
-            <div class="strip" id="chart-ttf" role="group" aria-label="Fix day per finding"></div>
-            <div class="legend sp-legend"><span><i class="lg-ok"></i>Fixed before disclosure</span><span><i class="lg-late"></i>Fixed after disclosure</span><span><i class="lg-emb"></i>Fixed, still under embargo</span></div>
-          </div>
-        </article>
-      </div>
-    </section>
-  </div>
-
-  <div class="wrap" id="stats-rule"><div class="rule"></div></div>
-
   <div class="wrap">
     <section id="disclosures" aria-labelledby="disc-title">
       <div class="sec-head">
@@ -236,11 +237,6 @@
           <h2 id="disc-title">Disclosure index</h2>
           <p>Open a disclosure to read its writeup, loaded from the linked GitHub repository, with the CVSS breakdown and links to the proof of concept and NVD.</p>
         </div>
-      </div>
-
-      <div class="notice" id="demo-notice">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.2v4M8 4.8v.1"/></svg>
-        <div><b>Demo dataset.</b> These entries and the disclosure clock use fictional vendors to preview the design. Replace the vault's demo findings with BlackHalo's own and publish, then delete this notice in <code>index.html</code>.</div>
       </div>
 
       <div class="toolbar" role="search">
