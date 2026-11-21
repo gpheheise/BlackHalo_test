@@ -129,6 +129,87 @@
    }
   ]
  },
+ "reported": {
+  "total": 204,
+  "months": {
+   "2026-09": 23,
+   "2026-10": 117,
+   "2026-11": 64
+  },
+  "severity": {
+   "Critical": 5,
+   "High": 52,
+   "Medium": 138,
+   "Low": 9
+  },
+  "classes": [
+   [
+    "Broken Access Control",
+    70,
+    3
+   ],
+   [
+    "IDOR",
+    56,
+    1
+   ],
+   [
+    "CSRF",
+    11,
+    0
+   ],
+   [
+    "Stored XSS",
+    11,
+    1
+   ],
+   [
+    "Path Traversal",
+    8,
+    0
+   ],
+   [
+    "SQLi",
+    7,
+    0
+   ],
+   [
+    "SSRF",
+    7,
+    0
+   ],
+   [
+    "Information Disclosure",
+    5,
+    2
+   ],
+   [
+    "RCE",
+    4,
+    0
+   ],
+   [
+    "Session Security",
+    4,
+    0
+   ],
+   [
+    "Privilege Escalation",
+    3,
+    0
+   ],
+   [
+    "Race Condition",
+    3,
+    0
+   ]
+  ],
+  "cvss": {
+   "avg": 6.3,
+   "min": 3.1,
+   "max": 9.9
+  }
+ },
  "response": {
   "released": 7,
   "fixedBefore": 7,
