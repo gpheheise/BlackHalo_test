@@ -36,6 +36,12 @@ const sameList = (a, b) => Array.isArray(a) && a.length === b.length && a.every(
 
 if (existsSync(join(DATA, "cves.json"))) warnings.push("data/cves.json is from the old layout and is ignored by the site. Import it into the vault (bh import) and publish.");
 
+// A freshly uploaded site has no data until the vault's first publish.
+if (!existsSync(join(DATA, "stats.json")) && !existsSync(join(DATA, "embargo.json"))) {
+  console.log("No data yet: the vault's first publish creates data/. Nothing to check.");
+  process.exit(0);
+}
+
 /* ---------- stats.json ---------- */
 const stats = read("stats.json");
 if (stats === undefined) bad("stats.json", "missing (run the vault's publish step)");
@@ -123,6 +129,15 @@ for (const y of years) {
   });
 }
 if (stats?.released && stats.released.total !== indexRows) bad("stats.json", `released.total is ${stats.released.total} but the index files hold ${indexRows} rows`);
+// "reported" counts every finding, disclosed or not, from fields that are public anyway
+if (stats?.reported) {
+  const R = stats.reported, embRows = (emb?.rows ?? []).length;
+  const sumOf = (o) => Object.values(o ?? {}).reduce((a, b) => a + b, 0);
+  if (R.total !== embRows + indexRows) bad("stats.json", `reported.total is ${R.total} but embargo.json + index hold ${embRows + indexRows}`);
+  if (sumOf(R.months) !== R.total) bad("stats.json", `reported.months adds up to ${sumOf(R.months)}, not ${R.total}`);
+  if (sumOf(R.severity) !== R.total) bad("stats.json", `reported.severity adds up to ${sumOf(R.severity)}, not ${R.total}`);
+  for (const c of R.classes ?? []) if (!Array.isArray(c) || c.length !== 3 || typeof c[0] !== "string" || !isInt(c[1]) || !isInt(c[2]) || c[2] > c[1]) bad("stats.json", `reported.classes entry ${JSON.stringify(c)} must be [class, reported, disclosed]`);
+}
 
 const withRepo = [];
 const detailsDir = join(DATA, "details");

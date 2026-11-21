@@ -103,46 +103,58 @@
         <div>
           <div class="kicker" id="stats-kicker">data/stats.json</div>
           <h2 id="stats-title">By the numbers</h2>
-          <p>Every figure is computed from the disclosure dataset, so adding a finding updates the whole page.</p>
+          <p>Every figure is computed from the dataset, so adding a finding updates the whole page.</p>
+          <div class="series-key" aria-label="Colour key">
+            <span><i class="k-rep"></i><span><b>Reported</b> every finding sent to a vendor, including those still under embargo</span></span>
+            <span><i class="k-dis"></i><span><b>Disclosed</b> published with vendor and product</span></span>
+          </div>
         </div>
       </div>
       <div class="bento">
         <article class="tile t-total">
-          <h3>Vulnerabilities disclosed</h3>
-          <div class="hero-fig" id="fig-total">–</div>
+          <h3>Vulnerabilities</h3>
+          <div class="duo">
+            <div class="duo-item rep"><div class="hero-fig" id="fig-rep">–</div><div class="duo-lab"><i class="k-rep"></i>Reported</div></div>
+            <div class="duo-item dis"><div class="hero-fig" id="fig-dis">–</div><div class="duo-lab"><i class="k-dis"></i>Disclosed</div></div>
+          </div>
           <p class="sub" id="sub-total"></p>
-          <div class="cols" id="chart-years" role="group" aria-label="CVEs published per month"></div>
+          <div class="cols" id="chart-years" role="group" aria-label="Findings reported and disclosed per month"></div>
           <p class="sub cols-cap" id="cap-periods"></p>
         </article>
         <article class="tile t-sev">
           <h3>Severity (CVSS v3.1)</h3>
           <p class="sub" id="sub-sev"></p>
-          <div class="seg-bar" id="chart-sev" role="group" aria-label="CVEs by severity"></div>
+          <div class="sev-rows" id="chart-sev"></div>
           <div class="legend" id="legend-sev"></div>
         </article>
         <article class="tile t-cvss">
           <h3>Average base score</h3>
-          <div class="fig num" id="fig-cvss">–</div>
-          <div class="scale" id="chart-cvss" aria-hidden="true"><div class="bands"><i></i><i></i><i></i><i></i></div><span class="mark" id="cvss-mark"></span><div class="ticks"><span>0</span><span>4</span><span>7</span><span>9</span><span>10</span></div></div>
+          <div class="duo duo-sm">
+            <div class="duo-item rep"><div class="fig num" id="fig-cvss-rep">–</div><div class="duo-lab"><i class="k-rep"></i>Reported</div></div>
+            <div class="duo-item dis"><div class="fig num" id="fig-cvss-dis">–</div><div class="duo-lab"><i class="k-dis"></i>Disclosed</div></div>
+          </div>
+          <div class="scale" id="chart-cvss" aria-hidden="true"><div class="bands"><i></i><i></i><i></i><i></i></div><span class="mark rep" id="cvss-mark-rep"></span><span class="mark dis" id="cvss-mark-dis"></span><div class="ticks"><span>0</span><span>4</span><span>7</span><span>9</span><span>10</span></div></div>
+          <p class="sub" id="sub-cvss"></p>
         </article>
         <article class="tile t-poc">
-          <h3>Public proof of concept</h3>
+          <h3>Public proof of concept<span class="only"><i class="k-dis"></i>disclosed</span></h3>
           <div class="fig" id="fig-poc">–</div>
           <div class="meter" id="meter-poc" role="img"><i id="meter-poc-fill"></i></div>
           <p class="sub" id="sub-poc"></p>
         </article>
         <article class="tile t-cls">
           <h3>Vulnerability classes</h3>
-          <p class="sub">Top weakness classes by number of CVEs</p>
-          <div class="ranked" id="chart-cls"></div>
+          <p class="sub">Top weakness classes, reported and disclosed</p>
+          <div class="ranked pairs" id="chart-cls"></div>
         </article>
         <article class="tile t-vend">
-          <h3>Vendors affected</h3>
+          <h3>Vendors affected<span class="only"><i class="k-dis"></i>disclosed</span></h3>
           <div class="fig" id="fig-vend">–</div>
           <div class="mini-list" id="list-vend"></div>
+          <p class="sub" id="sub-vend"></p>
         </article>
         <article class="tile t-repo">
-          <h3>Research repositories</h3>
+          <h3>Research repositories<span class="only"><i class="k-dis"></i>disclosed</span></h3>
           <div class="fig" id="fig-repo">–</div>
           <p class="sub" id="sub-repo"></p>
         </article>

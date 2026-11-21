@@ -13,6 +13,7 @@ const SITE = {
   data: "data/",
   localWriteups: "writeups/",    // fallback folder in this repo, used when a research repo is private or unreachable
   fetchTimeoutMs: 7000,
+  chartStartMonth: "2026-09",    // first month of the disclosures chart; "chartStartMonth" in the vault's settings.json wins
 };
 const DAY = 86_400_000;
 const WINDOW_DAYS = 90;
@@ -138,9 +139,9 @@ async function init() {
   renderLatest();
   renderReleaseNote();
   renderClock();
-  if (STATS?.released?.total) {
+  if (STATS?.reported?.total || STATS?.released?.total || EMB.length) {
     renderStats();
-    renderResponse();
+    if (STATS?.released?.total) renderResponse(); else $(".t-resp").hidden = true;
   } else {
     $("#statistics").hidden = true;
     $("#stats-rule").hidden = true;
@@ -246,7 +247,9 @@ function renderClockStats(now) {
   const in24 = active.filter((e) => e.life.releaseAt - now <= DAY).length;
   const in7 = active.filter((e) => e.life.releaseAt - now <= 7 * DAY).length;
   const newToday = EMB.filter((e) => now - e.life.reported <= DAY).length;
-  const fixedN = EMB.filter((e) => e.fixedAt != null).length;
+  const fixedEmb = EMB.filter((e) => e.fixedAt != null).length;
+  const fixedRel = STATS?.response?.fixedBefore ?? 0;   // disclosed findings the vendor fixed before disclosure
+  const fixedN = fixedEmb + fixedRel, allN = EMB.length + (STATS?.released?.total ?? 0);
   const spark = new Array(14).fill(0);
   const d0 = dayStart(now) - 13 * DAY;
   for (const e of EMB) { const i = Math.round((dayStart(e.life.reported) - d0) / DAY); if (i >= 0 && i < 14) spark[i]++; }
@@ -255,7 +258,7 @@ function renderClockStats(now) {
     <div class="cstat"><span class="cl">Under embargo</span><b class="cv num">${num(EMB.length)}</b><span class="cs">vendors notified, details withheld</span></div>
     <div class="cstat"><span class="cl">Reported in the last 24 h</span><b class="cv num">${num(newToday)}</b><span class="spark" role="img" aria-label="Findings reported per day, last 14 days: ${spark.join(", ")}">${spark.map((v, i) => `<i data-tip-title="${esc(dayFmt.format(d0 + i * DAY))}" data-tip-body="${plural(v, "finding")} reported"></i>`).join("")}</span></div>
     <div class="cstat"><span class="cl">Releasing within 24 h</span><b class="cv num">${num(in24)}</b><span class="cs">${num(in7)} within 7 days</span></div>
-    <div class="cstat"><span class="cl">Patched under embargo</span><b class="cv num">${num(fixedN)}<small>/ ${num(EMB.length)}</small></b><span class="cs">${Math.round((fixedN / EMB.length) * 100)}% fixed before release</span></div>
+    <div class="cstat"><span class="cl">Patched before disclosure</span><b class="cv num">${num(fixedN)}<small>/ ${num(allN)}</small></b><span class="cs">${num(fixedRel)} since disclosed · ${num(fixedEmb)} still under embargo</span></div>
     ${next ? `<a class="cstat tone" href="#${next.slug}" data-until="${next.life.releaseAt}" data-kind="tone"><span class="cl">Next full disclosure</span><b class="cv mono" data-until="${next.life.releaseAt}" data-mode="short">${shortLeft(next.life.releaseAt - now)}</b><span class="cs">${esc(next.trackingId)} · ${esc(shortWhen.format(next.life.releaseAt))}</span></a>`
       : '<div class="cstat"><span class="cl">Next full disclosure</span><b class="cv">–</b><span class="cs">all releases paused</span></div>'}`;
   $$("#clock-stats .spark i").forEach((el, i) => { el.style.height = `${Math.max(8, (spark[i] / sparkMax) * 100)}%`; if (!spark[i]) el.classList.add("zero"); });
@@ -518,6 +521,7 @@ async function initIndex() {
   SHARDS.years = STATS?.index ?? [];
   buildIndexFilters();
   if (!SHARDS.years.length) { SHARDS.complete = true; renderCards(); return; }
+  const needMonths = !STATS?.reported || (STATS?.released?.total && !STATS.released.months);
   SHARDS.first = loadShard(SHARDS.years[0]);
   await SHARDS.first;
   renderCards();
@@ -530,6 +534,7 @@ async function initIndex() {
     }
     SHARDS.complete = true;
     refreshIndex();
+    if (needMonths) renderPeriods(reportedStats().months, STATS?.released?.months ?? monthsFromIndex());
   })();
 }
 const refreshIndex = debounce(() => { refreshClassOptions(); renderCards(); }, 150);
@@ -680,79 +685,143 @@ function renderLatest() {
 }
 
 /* ---------- statistics (precomputed by the vault) ---------- */
-function renderStats() {
-  const R = STATS.released;
-  const n = R.total;
-  const years = Object.keys(R.years).map(Number).sort((a, b) => a - b);
-  const minY = years[0], maxY = years[years.length - 1];
-  $("#stats-kicker").textContent = `data/stats.json · ${plural(n, "disclosure")} · latest ${R.latest?.[0] ? fmtDate(R.latest[0].date) : "–"}`;
-  $("#disc-kicker").textContent = `${plural(n, "disclosure")} · ${minY}–${maxY}`;
-  $("#fig-total").textContent = num(n);
-  $("#sub-total").textContent = `confirmed vulnerabilities published since ${minY}`;
-  renderPeriods(R.months ?? {}, STATS.chart?.startMonth);
+/* ---------- By the numbers: Reported (every finding) and Disclosed (published) ---------- */
+const NO_RELEASES = { total: 0, years: {}, severity: {}, classes: [], vendors: 0, vendorsTop: [], repos: 0, withRepo: 0, poc: 0, cvss: null, latest: [] };
 
-  const counts = SEVERITIES.map((s) => [s, R.severity[s] ?? 0]).filter(([, k]) => k > 0);
-  $("#chart-sev").replaceChildren(...counts.map(([s, k]) => {
+/** Totals over every reported finding. The vault sends them; for an older vault they are counted here. */
+function reportedStats() {
+  if (STATS?.reported) return STATS.reported;
+  const R = STATS?.released ?? NO_RELEASES;
+  const severity = Object.fromEntries(SEVERITIES.map((s) => [s, R.severity?.[s] ?? 0]));
+  const cls = new Map(R.classes);
+  let sum = (R.cvss?.avg ?? 0) * R.total, min = R.cvss?.min ?? 10, max = R.cvss?.max ?? 0;
+  for (const e of EMB) {
+    if (e.severity in severity) severity[e.severity]++;
+    cls.set(e.type, (cls.get(e.type) ?? 0) + 1);
+    sum += e.cvss; min = Math.min(min, e.cvss); max = Math.max(max, e.cvss);
+  }
+  const total = EMB.length + R.total, dis = new Map(R.classes);
+  return {
+    total, severity, months: reportedMonthsLocal(),
+    classes: [...cls].sort((a, b) => b[1] - a[1]).slice(0, 12).map(([t, k]) => [t, k, dis.get(t) ?? 0]),
+    cvss: total ? { avg: Math.round((sum / total) * 10) / 10, min, max } : null,
+  };
+}
+/** Report months counted in the browser: findings under embargo plus the loaded part of the archive. */
+function reportedMonthsLocal() {
+  const m = {};
+  const add = (t) => { if (!Number.isFinite(t)) return; const k = new Date(t).toISOString().slice(0, 7); m[k] = (m[k] ?? 0) + 1; };
+  for (const e of EMB) add(e.life.reported);
+  for (const r of IDX) if (r.date) add(Date.parse(r.date) - (r.releaseDay ?? 0) * DAY);
+  return m;
+}
+const monthsFromIndex = () => IDX.reduce((m, r) => { const k = r.date.slice(0, 7); if (k) m[k] = (m[k] ?? 0) + 1; return m; }, {});
+
+function renderStats() {
+  const R = STATS?.released ?? NO_RELEASES;
+  const A = reportedStats();
+  const nR = A.total, nD = R.total, nE = Math.max(0, nR - nD);
+  const latest = R.latest?.[0];
+  $("#stats-kicker").textContent = `data/stats.json · ${num(nR)} reported · ${num(nD)} disclosed${latest ? ` · latest ${fmtDate(latest.date)}` : ""}`;
+  const years = Object.keys(R.years ?? {}).map(Number).sort((a, b) => a - b);
+  if (nD && years.length) $("#disc-kicker").textContent = `${plural(nD, "disclosure")} · ${years[0]}${years.length > 1 ? `–${years[years.length - 1]}` : ""}`;
+
+  // hero: both counts side by side, then the same two series per month
+  $("#fig-rep").textContent = num(nR);
+  $("#fig-dis").textContent = num(nD);
+  const len = Math.max(num(nR).length, num(nD).length);
+  $(".t-total .duo").dataset.len = len > 5 ? "xl" : len > 3 ? "l" : "s";
+  $("#sub-total").textContent = nE ? `${num(nE)} still under embargo, disclosed once their 90 days are up` : "every reported finding has been disclosed";
+  renderPeriods(A.months ?? {}, R.months ?? monthsFromIndex());
+
+  // severity: one bar per series
+  $("#chart-sev").replaceChildren(sevRow("Reported", A.severity, nR), sevRow("Disclosed", R.severity, nD));
+  const shown = SEVERITIES.filter((s) => (A.severity?.[s] ?? 0) + (R.severity?.[s] ?? 0) > 0);
+  $("#legend-sev").innerHTML = shown.map((s) => `<span class="s-${s}"><i class="fill-sev"></i>${s}</span>`).join("");
+  const hi = (sev) => (sev?.Critical ?? 0) + (sev?.High ?? 0);
+  $("#sub-sev").textContent = `${num(hi(A.severity))} of ${num(nR)} reported rated High or Critical${nD ? ` · ${num(hi(R.severity))} of ${num(nD)} disclosed` : ""}`;
+  fitSegLabels();
+
+  // average score: both series on one scale
+  const score = (fig, mark, c) => {
+    $(fig).textContent = c ? c.avg.toFixed(1) : "–";
+    $(mark).hidden = !c;
+    if (c) $(mark).style.left = `calc(${(c.avg / 10) * 100}% - 1px)`;
+  };
+  score("#fig-cvss-rep", "#cvss-mark-rep", A.cvss);
+  score("#fig-cvss-dis", "#cvss-mark-dis", nD ? R.cvss : null);
+  $("#sub-cvss").textContent = A.cvss ? `range ${A.cvss.min.toFixed(1)}–${A.cvss.max.toFixed(1)} across all reported` : "";
+
+  // public PoCs only exist for disclosed findings
+  const pct = nD ? Math.round((R.poc / nD) * 100) : 0;
+  $("#fig-poc").innerHTML = `${num(R.poc)}<small>/ ${num(nD)}</small>`;
+  $("#meter-poc-fill").style.width = `${pct}%`;
+  $("#meter-poc").setAttribute("aria-label", `${R.poc} of ${nD} disclosures have a public proof of concept`);
+  $("#sub-poc").textContent = nD ? `${pct}% of disclosures ship with a public PoC` : "published with each disclosure";
+
+  // classes: a reported bar and a disclosed bar per class, on one scale
+  const cls = (A.classes ?? []).slice(0, 6);
+  const maxC = Math.max(1, ...cls.map(([, k]) => k));
+  $("#chart-cls").replaceChildren(...cls.map(([t, k, d = 0]) => {
+    const lab = CLASS_SHORT[t] || t;
+    const row = document.createElement("div");
+    row.className = "row";
+    row.tabIndex = 0;
+    row.dataset.tipTitle = lab;
+    row.dataset.tipBody = `${num(k)} reported · ${num(d)} disclosed`;
+    row.setAttribute("aria-label", `${lab}: ${k} reported, ${d} disclosed`);
+    row.innerHTML = `<span class="lab">${esc(lab)}</span><span class="pair"><span class="ln rep"><span class="fill"></span><span class="val">${num(k)}</span></span><span class="ln dis"><span class="fill"></span><span class="val">${num(d)}</span></span></span>`;
+    $(".ln.rep .fill", row).style.width = `calc((100% - 44px) * ${k / maxC})`;
+    if (d) $(".ln.dis .fill", row).style.width = `max(2px, calc((100% - 44px) * ${d / maxC}))`;
+    else $(".ln.dis .fill", row).hidden = true;   // none disclosed: no stub that reads as "a few"
+    return row;
+  }));
+
+  // vendors and repositories are only named once a finding is disclosed
+  $("#fig-vend").textContent = num(R.vendors ?? 0);
+  $("#list-vend").innerHTML = (R.vendorsTop ?? []).map(([v, k]) => `<div><span>${esc(v)}</span><b>${num(k)}</b></div>`).join("");
+  $("#sub-vend").textContent = nE ? `${plural(nE, "finding")} under embargo, vendor withheld` : "";
+  $("#fig-repo").textContent = num(R.repos ?? 0);
+  $("#sub-repo").textContent = nD ? `${num(R.withRepo)} of ${num(nD)} disclosures link a writeup on GitHub` : "published with each disclosure";
+}
+
+/** One severity bar for one series. Rows are labelled in text, so the series colours never sit next to the severity colours. */
+function sevRow(label, sev, n) {
+  const row = document.createElement("div");
+  row.className = "sev-row";
+  row.innerHTML = `<div class="sev-lab"><span>${label}</span><b>${num(n)}</b></div><div class="seg-bar" role="group"></div>`;
+  const bar = $(".seg-bar", row);
+  bar.setAttribute("aria-label", `${label} findings by severity`);
+  const parts = SEVERITIES.map((s) => [s, sev?.[s] ?? 0]).filter(([, k]) => k > 0);
+  if (!parts.length) { bar.classList.add("empty"); bar.textContent = "none yet"; return row; }
+  bar.append(...parts.map(([s, k]) => {
     const part = document.createElement("div");
     part.className = `part fill-sev ink-on-c s-${s}`;
     part.style.flexGrow = k;
     part.style.flexBasis = "0";
     part.tabIndex = 0;
-    part.dataset.tipTitle = s;
-    part.dataset.tipBody = `${plural(k, "CVE")} · ${Math.round((k / n) * 100)}% of total`;
-    part.setAttribute("aria-label", `${s}: ${k} of ${n}`);
+    part.dataset.tipTitle = `${s} · ${label.toLowerCase()}`;
+    part.dataset.tipBody = `${plural(k, "finding")} · ${Math.round((k / n) * 100)}% of ${label.toLowerCase()}`;
+    part.setAttribute("aria-label", `${label}, ${s}: ${k} of ${n}`);
     const lab = document.createElement("span");
     lab.className = "pl";
     lab.textContent = num(k);
     part.append(lab);
     return part;
   }));
-  $("#legend-sev").innerHTML = counts.map(([s]) => `<span class="s-${s}"><i class="fill-sev"></i>${s}</span>`).join("");
-  $("#sub-sev").textContent = `${num((R.severity.Critical ?? 0) + (R.severity.High ?? 0))} of ${num(n)} rated High or Critical`;
-  fitSegLabels();
-
-  if (R.cvss) {
-    $("#fig-cvss").textContent = R.cvss.avg.toFixed(1);
-    $("#cvss-mark").style.left = `calc(${(R.cvss.avg / 10) * 100}% - 1px)`;
-    const sub = document.createElement("p");
-    sub.className = "sub";
-    sub.textContent = `range ${R.cvss.min.toFixed(1)}–${R.cvss.max.toFixed(1)}`;
-    $(".t-cvss").append(sub);
-  }
-  const pct = Math.round((R.poc / n) * 100);
-  $("#fig-poc").innerHTML = `${num(R.poc)}<small>/ ${num(n)}</small>`;
-  $("#meter-poc-fill").style.width = `${pct}%`;
-  $("#meter-poc").setAttribute("aria-label", `${R.poc} of ${n} disclosures have a public proof of concept`);
-  $("#sub-poc").textContent = `${pct}% ship with a public PoC`;
-
-  const cls = R.classes.map(([t, k]) => [CLASS_SHORT[t] || t, k]).slice(0, 6);
-  const maxC = cls[0]?.[1] ?? 1;
-  $("#chart-cls").replaceChildren(...cls.map(([lab, k]) => {
-    const row = document.createElement("div");
-    row.className = "row";
-    row.tabIndex = 0;
-    row.dataset.tipTitle = lab;
-    row.dataset.tipBody = `${plural(k, "CVE")} · ${Math.round((k / n) * 100)}% of total`;
-    row.innerHTML = `<span class="lab">${esc(lab)}</span><span class="track"><span class="fill"></span><span class="val">${num(k)}</span></span>`;
-    $(".fill", row).style.width = `calc((100% - 44px) * ${k / maxC})`;
-    return row;
-  }));
-  $("#fig-vend").textContent = num(R.vendors);
-  $("#list-vend").innerHTML = R.vendorsTop.map(([v, k]) => `<div><span>${esc(v)}</span><b>${num(k)}</b></div>`).join("");
-  $("#fig-repo").textContent = num(R.repos);
-  $("#sub-repo").textContent = `${num(R.withRepo)} of ${num(n)} disclosures link a writeup on GitHub`;
+  return row;
 }
 
 const MONTH_SHORT = new Intl.DateTimeFormat("en-US", { month: "short", timeZone: "UTC" });
 const MONTH_LONG = new Intl.DateTimeFormat("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
 
 /**
- * Disclosures per period, from the chart's start month (settings.json in the vault) to the end of the
- * current quarter. Up to 10 months are shown one by one; beyond that they are summed per quarter,
- * and beyond 12 quarters per year. The range grows by itself as time passes.
+ * Buckets for the per-period chart, from the start month (settings.json in the vault) to the end of the
+ * current quarter. Up to 10 months are shown one by one, then quarters, and past 12 quarters, years.
+ * Each bucket carries one value per series.
  */
-function periodBuckets(months, startMonth, now = new Date()) {
-  const keys = Object.keys(months).sort();
+function periodBuckets(series, startMonth, now = new Date()) {
+  const keys = [...new Set(series.flatMap((m) => Object.keys(m ?? {})))].sort();
   const start = startMonth || keys[0];
   if (!start) return null;
   const idx = (k) => { const [y, m] = k.split("-").map(Number); return y * 12 + m - 1; };
@@ -762,16 +831,16 @@ function periodBuckets(months, startMonth, now = new Date()) {
   const eIdx = Math.max(quarterEnd, sIdx, keys.length ? idx(keys[keys.length - 1]) : sIdx);
   const monthsList = [];
   for (let i = sIdx; i <= eIdx; i++) {
-    const y = Math.floor(i / 12), m = i % 12;
-    monthsList.push({ first: i, last: i, y, k: months[`${y}-${String(m + 1).padStart(2, "0")}`] ?? 0,
+    const y = Math.floor(i / 12), m = i % 12, key = `${y}-${String(m + 1).padStart(2, "0")}`;
+    monthsList.push({ first: i, last: i, y, v: series.map((s) => s?.[key] ?? 0),
       label: MONTH_SHORT.format(Date.UTC(y, m, 1)), title: MONTH_LONG.format(Date.UTC(y, m, 1)), mark: i === sIdx || m === 0 });
   }
   const group = (list, keyOf, make) => {
     const out = new Map();
     for (const x of list) {
       const key = keyOf(x);
-      const b = out.get(key) ?? { ...make(x), first: x.first, k: 0 };
-      b.last = x.last; b.k += x.k;
+      const b = out.get(key) ?? { ...make(x), first: x.first, v: x.v.map(() => 0) };
+      b.last = x.last; b.v = b.v.map((t, j) => t + x.v[j]);
       out.set(key, b);
     }
     return [...out.values()];
@@ -795,18 +864,22 @@ function periodBuckets(months, startMonth, now = new Date()) {
   return { unit, buckets, range: `${buckets[0].title} – ${buckets[buckets.length - 1].title}` };
 }
 
-function renderPeriods(months, startMonth) {
+/** Reported per month (by report date) next to disclosed per month (by publication date). */
+function renderPeriods(repMonths, disMonths) {
   const root = $("#chart-years");
-  const P = periodBuckets(months, startMonth);
-  if (!P) { root.hidden = true; $("#cap-periods").hidden = true; return; }
+  const P = periodBuckets([repMonths, disMonths], STATS?.chart?.startMonth || SITE.chartStartMonth);
+  root.hidden = !P;
+  $("#cap-periods").hidden = !P;
+  if (!P) return;
   const { unit, buckets } = P;
-  const max = Math.max(1, ...buckets.map((b) => b.k));
+  const max = Math.max(1, ...buckets.flatMap((b) => b.v));
   const ticks = niceTicks(max, 3);
   const top = ticks[ticks.length - 1];
   const past = buckets.filter((b) => !b.future);
-  const lastIdx = buckets.indexOf(past[past.length - 1]);
-  const maxIdx = buckets.findIndex((b) => b.k === max);
-  root.setAttribute("aria-label", `CVEs published per ${unit}, ${P.range}`);
+  const last = past[past.length - 1];
+  const peak = [0, 1].map((j) => Math.max(...buckets.map((b) => b.v[j])));
+  const labelAll = buckets.length <= 6;
+  root.setAttribute("aria-label", `Findings reported and disclosed per ${unit}, ${P.range}`);
   root.innerHTML = '<div class="yax"></div><div class="plot"><div class="area"></div><div class="xax"></div></div>';
   const yax = $(".yax", root), area = $(".area", root), xax = $(".xax", root);
   ticks.forEach((t) => {
@@ -821,23 +894,36 @@ function renderPeriods(months, startMonth) {
       area.append(g);
     }
   });
-  buckets.forEach((b, i) => {
+  buckets.forEach((b) => {
     const col = document.createElement("div");
-    col.className = `col${b.future ? " future" : ""}`;
+    col.className = `col duo-col${b.future ? " future" : ""}`;
     col.tabIndex = 0;
     col.dataset.tipTitle = b.title;
-    col.dataset.tipBody = b.future ? "Upcoming" : `${plural(b.k, "CVE")} published${b.current ? " so far" : ""}`;
-    col.setAttribute("aria-label", `${b.title}: ${b.future ? "upcoming" : plural(b.k, "CVE")}`);
-    const bar = document.createElement("div");
-    bar.className = "bar";
-    if (!b.future) bar.style.height = `${(b.k / top) * 100}%`;
-    if (b.k > 0 && (i === lastIdx || i === maxIdx)) {
-      const cap = document.createElement("span");
-      cap.className = "cap";
-      cap.textContent = num(b.k);
-      bar.append(cap);
+    col.dataset.tipBody = b.future ? "Upcoming" : `${num(b.v[0])} reported · ${num(b.v[1])} disclosed${b.current ? " so far" : ""}`;
+    col.setAttribute("aria-label", `${b.title}: ${b.future ? "upcoming" : `${b.v[0]} reported, ${b.v[1]} disclosed`}`);
+    if (b.future) {
+      const bar = document.createElement("div");
+      bar.className = "bar";
+      col.append(bar);
+    } else {
+      // label a bar when there's room: every bar for a few buckets, otherwise each series' peak and the latest bucket
+      const want = b.v.map((v, j) => v > 0 && (labelAll || v === peak[j] || b === last));
+      if (want[0] && want[1] && num(b.v[0]).length + num(b.v[1]).length > 5) want[b.v[0] >= b.v[1] ? 1 : 0] = false;
+      ["rep", "dis"].forEach((cls, j) => {
+        const v = b.v[j];
+        const bar = document.createElement("div");
+        bar.className = `bar ${cls}`;
+        bar.style.height = `${(v / top) * 100}%`;
+        if (!v) bar.style.minHeight = "0";
+        if (want[j]) {
+          const cap = document.createElement("span");
+          cap.className = "cap";
+          cap.textContent = num(v);
+          bar.append(cap);
+        }
+        col.append(bar);
+      });
     }
-    col.append(bar);
     area.append(col);
     const lab = document.createElement("span");
     lab.textContent = b.label;
@@ -848,7 +934,7 @@ function renderPeriods(months, startMonth) {
     }
     xax.append(lab);
   });
-  $("#cap-periods").textContent = `Per ${unit} · ${P.range}`;
+  $("#cap-periods").textContent = `Per ${unit} · ${P.range} · reported by report date, disclosed by publication date`;
 }
 
 function fitSegLabels() {
