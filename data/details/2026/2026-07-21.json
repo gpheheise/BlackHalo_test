@@ -1,3 +1,0 @@
-{
-"CVE-2026-46007":{"id":"CVE-2026-46007","trackingId":"BH-2026-0003","title":"SSRF to cloud instance metadata","vendor":"Soylent","product":"Soylent Cloud Connector","type":"Server-Side Request Forgery","cwe":"CWE-918","date":"2026-07-21","status":"Fixed","cvss":8.6,"severity":"High","cvssVector":"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N","summary":"The connector's URL-import feature follows redirects to link-local addresses, exposing instance metadata and the temporary cloud credentials it serves.","repo":"gpheheise/CVE-2026-46007","branch":"main","writeup":"README.md","poc":true,"pocPath":"poc","reported":"2026-04-22T09:00:00Z","acknowledged":"2026-04-23","fixed":"2026-05-28","windowDays":90,"extensions":[],"releasedAt":"2026-07-21T09:00:00Z"}
-}

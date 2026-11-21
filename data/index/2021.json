@@ -1,3 +1,0 @@
-{"fields":["id","trackingId","title","vendor","product","type","cwe","date","cvss","fixedDay","releaseDay","repo","poc"],"types":["Cross-Site Scripting"],"rows":[
-["CVE-2021-39544","BH-2021-0001","Stored XSS in comment rendering","Hooli","Hooli Analytics",0,"CWE-79","2021-09-21",5.4,83,90,"gpheheise/CVE-2021-39544",0]
-]}

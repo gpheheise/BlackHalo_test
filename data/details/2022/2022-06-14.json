@@ -1,3 +1,0 @@
-{
-"CVE-2022-41980":{"id":"CVE-2022-41980","trackingId":"BH-2022-0002","title":"Information disclosure via verbose errors","vendor":"PiedPiper","product":"Pied Piper Storage","type":"Information Disclosure","cwe":"CWE-209","date":"2022-06-14","status":"Fixed","cvss":3.7,"severity":"Low","cvssVector":"CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N","summary":"Unhandled exceptions return stack traces that reveal internal host names and library versions.","repo":"gpheheise/CVE-2022-41980","branch":"main","writeup":"README.md","poc":false,"pocPath":"poc","reported":"2022-03-16T09:00:00Z","acknowledged":"2022-03-20","fixed":"2022-04-03","windowDays":90,"extensions":[],"releasedAt":"2022-06-14T09:00:00Z"}
-}

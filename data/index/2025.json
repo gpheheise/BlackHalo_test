@@ -1,8 +1,0 @@
-{"fields":["id","trackingId","title","vendor","product","type","cwe","date","cvss","fixedDay","releaseDay","repo","poc"],"types":["Information Disclosure","Path Traversal","Privilege Escalation","Remote Code Execution","SQL Injection","XML External Entity"],"rows":[
-["CVE-2025-39902","BH-2025-0002","Path traversal in firmware update endpoint","Stark","Stark Edge Router",1,"CWE-22","2025-12-08",7.5,77,90,"gpheheise/CVE-2025-39902",1],
-["CVE-2025-38740","BH-2025-0003","OS command injection via diagnostics API","Umbrella","Umbrella IoT Hub",3,"CWE-78","2025-11-19",9.8,73,90,"gpheheise/CVE-2025-38740",1],
-["CVE-2025-37155","BH-2025-0004","SQL injection in reporting filter","Hooli","Hooli Analytics",4,"CWE-89","2025-09-27",8.8,24,90,"gpheheise/CVE-2025-37155",1],
-["CVE-2025-35004","BH-2025-0005","Local privilege escalation via setuid helper","Wayne","Wayne SCADA Suite",2,"CWE-269","2025-07-15",7.8,null,104,"gpheheise/CVE-2025-35004",1],
-["CVE-2025-33218","BH-2025-0006","XXE in report import parser","Dunder","Dunder VoIP Manager",5,"CWE-611","2025-05-04",6.5,20,90,"gpheheise/CVE-2025-33218",0],
-["CVE-2025-30091","BH-2024-0001","Session token leak in debug response headers","PiedPiper","Pied Piper Storage",0,"CWE-200","2025-02-18",5.9,67,90,"gpheheise/CVE-2025-30091",0]
-]}

@@ -1,3 +1,0 @@
-{
-"CVE-2025-38740":{"id":"CVE-2025-38740","trackingId":"BH-2025-0003","title":"OS command injection via diagnostics API","vendor":"Umbrella","product":"Umbrella IoT Hub","type":"Remote Code Execution","cwe":"CWE-78","date":"2025-11-19","status":"Fixed","cvss":9.8,"severity":"Critical","cvssVector":"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H","summary":"The ping diagnostic passes its host parameter to a shell, so an unauthenticated request can run commands as root on the hub.","repo":"gpheheise/CVE-2025-38740","branch":"main","writeup":"README.md","poc":true,"pocPath":"poc","reported":"2025-08-21T09:00:00Z","acknowledged":"2025-08-22","fixed":"2025-11-02","windowDays":90,"extensions":[],"releasedAt":"2025-11-19T09:00:00Z"}
-}

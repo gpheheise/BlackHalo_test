@@ -1,5 +1,0 @@
-{"fields":["id","trackingId","title","vendor","product","type","cwe","date","cvss","fixedDay","releaseDay","repo","poc"],"types":["Insecure Deserialization","Path Traversal","Privilege Escalation"],"rows":[
-["CVE-2023-48815","BH-2023-0002","Deserialization RCE in plugin loader","Vandelay","Vandelay ERP",0,"CWE-502","2023-11-12",9.8,52,90,"gpheheise/CVE-2023-48815",1],
-["CVE-2023-45190","BH-2023-0003","Path traversal in file export","Soylent","Soylent Cloud Connector",1,"CWE-22","2023-08-19",7.7,39,90,"gpheheise/CVE-2023-45190",1],
-["CVE-2023-41077","BH-2023-0004","Privilege escalation via race condition","Wayne","Wayne SCADA Suite",2,"CWE-362","2023-05-02",7,null,90,"gpheheise/CVE-2023-41077",0]
-]}

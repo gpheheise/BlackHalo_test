@@ -1,3 +1,0 @@
-{
-"CVE-2026-47188":{"id":"CVE-2026-47188","trackingId":"BH-2026-0002","title":"Authentication bypass in SAML assertion validation","vendor":"Globex","product":"Globex VPN Gateway","type":"Authentication Bypass","cwe":"CWE-347","date":"2026-09-02","status":"Fixed","cvss":9.1,"severity":"Critical","cvssVector":"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N","summary":"The gateway validates the signature of one assertion but authorises the user named in another, so a signed response can be rewrapped to log in as any user.","repo":"gpheheise/CVE-2026-47188","branch":"main","writeup":"README.md","poc":true,"pocPath":"poc","reported":"2026-06-04T09:00:00Z","acknowledged":"2026-06-06","fixed":"2026-07-09","windowDays":90,"extensions":[],"releasedAt":"2026-09-02T09:00:00Z"}
-}

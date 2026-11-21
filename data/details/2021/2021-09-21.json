@@ -1,3 +1,0 @@
-{
-"CVE-2021-39544":{"id":"CVE-2021-39544","trackingId":"BH-2021-0001","title":"Stored XSS in comment rendering","vendor":"Hooli","product":"Hooli Analytics","type":"Cross-Site Scripting","cwe":"CWE-79","date":"2021-09-21","status":"Fixed","cvss":5.4,"severity":"Medium","cvssVector":"CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N","summary":"Dashboard comments allow a markdown link with a javascript: URL that runs when another user clicks it.","repo":"gpheheise/CVE-2021-39544","branch":"main","writeup":"README.md","poc":false,"pocPath":"poc","reported":"2021-06-23T09:00:00Z","acknowledged":"2021-06-25","fixed":"2021-09-14","windowDays":90,"extensions":[],"releasedAt":"2021-09-21T09:00:00Z"}
-}
