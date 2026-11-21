@@ -55,6 +55,7 @@ const num = (v) => nf.format(v);
 const encPath = (p) => p.split("/").map(encodeURIComponent).join("/");
 const httpsUrl = (u) => { try { const x = new URL(u); return x.protocol === "https:" ? x.href : null; } catch { return null; } };
 const dateFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+const dayMonth = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
 const fmtDate = (d) => { const t = Date.parse(d); return Number.isNaN(t) ? esc(d) : dateFmt.format(t); };
 const plural = (n, word) => `${num(n)} ${word}${n === 1 ? "" : "s"}`;
 const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
@@ -135,16 +136,18 @@ async function init() {
   try { STATS = await fetchJSON("stats.json"); } catch (err) { showDataError(err); }
   const emb = await embargoP;
   if (emb) loadEmbargo(emb);
-  if (!STATS && !EMB.length) return;
+  if (!STATS && !EMB.length) { $("#nav-story").hidden = true; return; }
   renderLatest();
   renderReleaseNote();
   renderClock();
   if (STATS?.reported?.total || STATS?.released?.total || EMB.length) {
     renderStats();
+    renderStory();
     if (STATS?.released?.total) renderResponse(); else $(".t-resp").hidden = true;
   } else {
     $("#statistics").hidden = true;
     $("#stats-rule").hidden = true;
+    $("#nav-story").hidden = true;
   }
   renderRepos();
   startTicker();
@@ -783,6 +786,32 @@ function renderStats() {
   $("#sub-vend").textContent = nE ? `${plural(nE, "finding")} under embargo, vendor withheld` : "";
   $("#fig-repo").textContent = num(R.repos ?? 0);
   $("#sub-repo").textContent = nD ? `${num(R.withRepo)} of ${num(nD)} disclosures link a writeup on GitHub` : "published with each disclosure";
+}
+
+/** The five-step story under the statistics: the same counts, told as where each finding stands today. */
+function renderStory() {
+  const R = STATS?.released ?? NO_RELEASES, P = STATS?.response ?? {};
+  const nR = reportedStats().total, nD = R.total, nE = Math.max(EMB.length, nR - nD);
+  const fixedEmb = EMB.filter((e) => e.fixedAt != null).length;
+  const before = fixedEmb + (P.fixedBefore ?? 0), after = P.fixedAfter ?? 0;
+  $("#story-wrap").hidden = $("#story-rule").hidden = false;
+  $("#flow-rep").textContent = num(nR);
+  $("#flow-fix").textContent = num(before + after);
+  const foot = $("#flow-fix-foot");
+  foot.hidden = !(before + after);
+  foot.innerHTML = after ? `<b class="num">${num(before)}</b> before disclosure<br>${num(after)} after` : `${before === 1 ? "" : "all "}before disclosure`;
+  // long counts stack their label underneath, the same way in all three steps
+  $(".flow").dataset.len = Math.max(...[nR, before + after, nD].map((v) => num(v).length)) > 5 ? "l" : "s";
+  $("#flow-dis").textContent = num(nD);
+  const next = EMB.find((e) => !e.hold);   // EMB is sorted by release time
+  const link = $("#flow-next");
+  link.hidden = !nE;
+  const nextDay = next ? dateFmt.format(next.life.releaseAt) : "";
+  if (nE) link.innerHTML = `<b class="num">${num(nE)}</b> on the clock<br>${next ? `next release ${esc(dayMonth.format(next.life.releaseAt))}` : "releases paused"} ${ICON.go}`;
+  // the FAQ answer to "why is Disclosed so much lower" gets today's figures
+  const sameDay = next ? EMB.filter((e) => !e.hold && dateFmt.format(e.life.releaseAt) === nextDay).length : 0;
+  $("#faq-gap").textContent = !nE ? "" : ` Right now ${plural(nE, "finding")} ${nE === 1 ? "is" : "are"} under embargo` +
+    (next ? `; the next ${sameDay === 1 ? "one is" : `${num(sameDay)} are`} due on ${nextDay}.` : ".");
 }
 
 /** One severity bar for one series. Rows are labelled in text, so the series colours never sit next to the severity colours. */

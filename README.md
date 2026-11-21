@@ -68,6 +68,27 @@ Measured with 127,000 synthetic findings in headless Chrome:
 | Open a CVE (details fetched) | 0.06 s | 0.16 s |
 | DOM size | 1,700 nodes | 1,700 nodes |
 
+## By the numbers: reported vs. disclosed
+
+Every figure in the statistics section is shown for two groups, in two fixed colours:
+
+- **Reported** (blue): every finding sent to a vendor, including those still under embargo.
+- **Disclosed** (cyan): findings already published with vendor and product.
+
+Class, CVSS score and report date are public from day 0, so the reported totals reveal nothing that
+`embargo.json` doesn't already show. Vendors, PoCs and research repositories only exist once a finding
+is disclosed, so those tiles count disclosed findings and say so. Severity colours are Critical
+purple, High red, Medium orange, Low green.
+
+## The story behind the numbers
+
+Right under the statistics, five steps (Investigate, Validate, Report, Fix, Disclose) explain how a
+finding becomes a number. Steps 3 to 5 carry live counts from the same data: reported, patched by the
+vendor, and disclosed, plus how many are still on the clock and the next release date. The wording of
+the steps, the accountability line beneath them and the questions at the bottom of the page are plain
+HTML in `index.html`; edit them there. One answer ("Why is Disclosed so much lower than Reported?")
+appends today's embargo count and next release date automatically.
+
 ## Disclosure clock (findings under embargo)
 
 New findings appear on the site the day the vendor is notified, with only a tracking ID
@@ -88,7 +109,7 @@ The clock section has:
 
 The withheld details **never live in this repository**: GitHub Pages serves every file and git
 keeps every version, so hiding them in the browser would hide nothing. They live in the private
-`blackhalo-vault` repository, whose hourly workflow writes the files in `data/` here. CI rejects
+`blackhalo-vault` repository, whose workflow writes the files in `data/` here (once a day, and right after each upload). CI rejects
 any field in `embargo.json` outside the allowed list, and the vault runs the same check before it
 pushes.
 
