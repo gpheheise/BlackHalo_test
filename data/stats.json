@@ -130,41 +130,56 @@
   ]
  },
  "reported": {
-  "total": 204,
+  "total": 280,
   "months": {
    "2026-09": 23,
    "2026-10": 117,
-   "2026-11": 64
+   "2026-11": 140
   },
   "severity": {
    "Critical": 5,
-   "High": 52,
-   "Medium": 138,
-   "Low": 9
+   "High": 79,
+   "Medium": 180,
+   "Low": 16
   },
   "classes": [
    [
-    "Broken Access Control",
-    70,
-    3
-   ],
-   [
     "IDOR",
-    56,
+    84,
     1
    ],
    [
+    "Broken Access Control",
+    77,
+    3
+   ],
+   [
+    "Information Disclosure",
+    18,
+    2
+   ],
+   [
+    "Authentication Bypass",
+    13,
+    0
+   ],
+   [
     "CSRF",
-    11,
+    12,
     0
    ],
    [
     "Stored XSS",
-    11,
+    12,
     1
    ],
    [
     "Path Traversal",
+    9,
+    0
+   ],
+   [
+    "SSRF",
     8,
     0
    ],
@@ -174,14 +189,9 @@
     0
    ],
    [
-    "SSRF",
-    7,
-    0
-   ],
-   [
-    "Information Disclosure",
+    "Mass Assignment",
     5,
-    2
+    0
    ],
    [
     "RCE",
@@ -192,21 +202,11 @@
     "Session Security",
     4,
     0
-   ],
-   [
-    "Privilege Escalation",
-    3,
-    0
-   ],
-   [
-    "Race Condition",
-    3,
-    0
    ]
   ],
   "cvss": {
    "avg": 6.3,
-   "min": 3.1,
+   "min": 2.7,
    "max": 9.9
   }
  },
