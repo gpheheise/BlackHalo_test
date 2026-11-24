@@ -730,9 +730,11 @@ function renderStats() {
   if (nD && years.length) $("#disc-kicker").textContent = `${plural(nD, "disclosure")} · ${years[0]}${years.length > 1 ? `–${years[years.length - 1]}` : ""}`;
 
   // hero: both counts side by side, then the same two series per month
+  const nM = A.missed ?? 0;
   $("#fig-rep").textContent = num(nR);
   $("#fig-dis").textContent = num(nD);
-  const len = Math.max(num(nR).length, num(nD).length);
+  $("#fig-missed").textContent = num(nM);
+  const len = Math.max(num(nR).length, num(nD).length, num(nM).length);
   $(".t-total .duo").dataset.len = len > 5 ? "xl" : len > 3 ? "l" : "s";
   $("#sub-total").textContent = nE ? `${num(nE)} still under embargo, disclosed once their 90 days are up` : "every reported finding has been disclosed";
   renderPeriods(A.months ?? {}, R.months ?? monthsFromIndex());

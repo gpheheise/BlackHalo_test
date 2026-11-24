@@ -18,8 +18,8 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/img/blackhalo-logo.webp" as="image" type="image/webp">
-<link rel="stylesheet" href="assets/css/site.css">
-<script type="module" src="assets/js/app.js"></script>
+<link rel="stylesheet" href="assets/css/site.css?v=20261121-3">
+<script type="module" src="assets/js/app.js?v=20261121-3"></script>
 </head>
 <body>
 <div class="bg" aria-hidden="true"></div>
@@ -34,17 +34,17 @@
 
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="#overview" aria-label="BlackHalo home">
+    <a class="brand" href="#overview" aria-label="BlackHalo home (beta)">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#ff3b4a" stroke-width="2.2"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4" stroke="#ff3b4a" stroke-width="1.6"/><circle cx="12" cy="12" r="2.2" fill="#eef0f6"/></svg>
-      <span>Black<span class="h">Halo</span></span>
+      <span class="brand-name">Black<span class="h">Halo</span><span class="beta">Beta</span></span>
     </a>
     <nav class="nav" aria-label="Sections">
       <a href="#statistics">Statistics</a>
       <a href="#story" id="nav-story">How it works</a>
       <a href="#clock" id="nav-clock">Disclosure clock</a>
       <a href="#disclosures">Disclosures</a>
-      <a href="#repositories">Repositories</a>
       <a href="#questions">Questions</a>
+      <a class="nav-why" href="about.html">Why BlackHalo</a>
     </nav>
     <div class="top-actions">
       <button class="search-btn" id="open-palette" type="button" aria-label="Search disclosures">
@@ -78,6 +78,7 @@
             <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
             Research on GitHub
           </a>
+          <a class="w-link hero-why" href="about.html">Why BlackHalo <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
         </div>
         <p class="credit">Created by <b>Georg Ph. E. Heise</b> · Lufthansa Industry Solutions</p>
       </div>
@@ -108,15 +109,17 @@
           <div class="series-key" aria-label="Colour key">
             <span><i class="k-rep"></i><span><b>Reported</b> every finding sent to a vendor, including those still under embargo</span></span>
             <span><i class="k-dis"></i><span><b>Disclosed</b> published with vendor and product</span></span>
+            <span><i class="k-mis"></i><span><b>Missed</b> the credit for the same bug went to another researcher</span></span>
           </div>
         </div>
       </div>
       <div class="bento">
         <article class="tile t-total">
           <h3>Vulnerabilities</h3>
-          <div class="duo">
+          <div class="duo trio">
             <div class="duo-item rep"><div class="hero-fig" id="fig-rep">–</div><div class="duo-lab"><i class="k-rep"></i>Reported</div></div>
             <div class="duo-item dis"><div class="hero-fig" id="fig-dis">–</div><div class="duo-lab"><i class="k-dis"></i>Disclosed</div></div>
+            <div class="duo-item mis"><div class="hero-fig" id="fig-missed">–</div><div class="duo-lab"><i class="k-mis"></i>Missed</div></div>
           </div>
           <p class="sub" id="sub-total"></p>
           <div class="cols" id="chart-years" role="group" aria-label="Findings reported and disclosed per month"></div>
@@ -172,6 +175,15 @@
           </div>
         </article>
       </div>
+      <div class="stats-explain">
+        <h3>What these numbers mean</h3>
+        <p class="se-intro">We report every finding to the affected vendor <b>within 24 hours of discovering it</b>, then hold the technical details for 90 days so a fix can be built. These three figures are the honest record of that work.</p>
+        <dl class="se-terms">
+          <div><dt><i class="k-rep"></i>Reported</dt><dd>Every finding our researchers have sent to a vendor — the full count, including those still under embargo. This is the headline number: the work done.</dd></div>
+          <div><dt><i class="k-dis"></i>Disclosed</dt><dd>The subset we have since published in full, with vendor and product named — once the 90 days elapse or the vendor ships its own advisory. Lower than Reported mostly because clocks are still running.</dd></div>
+          <div><dt><i class="k-mis"></i>Missed</dt><dd>A bug we independently found and reported, but where another researcher was publicly credited for it — the CVE or the award went to them. The same vulnerability can be discovered by more than one team; when the credit lands elsewhere we count it here rather than claim it. An honest record, not an inflated one.</dd></div>
+        </dl>
+      </div>
     </section>
   </div>
 
@@ -223,7 +235,10 @@
       </ol>
       <div class="principle">
         <p class="quote">We can delegate actions. We cannot delegate accountability.</p>
-        <p>That is why nothing is counted until a researcher has reproduced it, and why every number above is a finding someone stands behind.</p>
+        <div>
+          <p>That is why nothing is counted until a researcher has reproduced it, and why every number above is a finding someone stands behind.</p>
+          <a class="w-link" href="about.html">The ideas behind BlackHalo <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+        </div>
       </div>
     </section>
   </div>
@@ -377,32 +392,32 @@
       </div>
       <div class="faq">
       <div class="faq-col">
-          <details>
-            <summary>Why do most findings show no vendor or product?</summary>
+          <div class="qa">
+            <h3>Why do most findings show no vendor or product?</h3>
             <p>While a finding's 90-day clock runs, only its report date, class, severity and score are public. Vendor, product, title and writeup stay withheld so nobody can use them before a fix exists. A vendor is named sooner only once it has published its own advisory for the issue.</p>
-          </details>
-          <details>
-            <summary>Why is Disclosed so much lower than Reported?</summary>
+          </div>
+          <div class="qa">
+            <h3>Why is Disclosed so much lower than Reported?</h3>
             <p>Disclosure follows the report by up to 90 days, so the gap is mostly findings whose clocks are still running.<span id="faq-gap"></span></p>
-          </details>
-          <details>
-            <summary>What happens if there is no fix after 90 days?</summary>
+          </div>
+          <div class="qa">
+            <h3>What happens if there is no fix after 90 days?</h3>
             <p>The record is published anyway, so the people running the software can protect themselves. When a fix is close, the deadline can be extended in good faith, and the clock shows every extension. Each record shows whether and when a fix shipped.</p>
-          </details>
+          </div>
       </div>
       <div class="faq-col">
-          <details>
-            <summary>Who finds the vulnerabilities, AI or people?</summary>
+          <div class="qa">
+            <h3>Who finds the vulnerabilities, AI or people?</h3>
             <p>Both, in fixed roles. The agent engine widens the search and speeds up analysis. Specialists choose the targets, direct the testing, challenge what it produces and confirm every finding before it is counted. The researcher, not the tool, answers for what is reported and published.</p>
-          </details>
-          <details>
-            <summary>Is this a vulnerability scanner?</summary>
+          </div>
+          <div class="qa">
+            <h3>Is this a vulnerability scanner?</h3>
             <p>No. Scanners repeat checks for weaknesses that are already known. Every finding here comes from research rather than a signature, and is backed by evidence that reproduces it.</p>
-          </details>
-          <details>
-            <summary>How are the scores calculated?</summary>
+          </div>
+          <div class="qa">
+            <h3>How are the scores calculated?</h3>
             <p>Each finding carries a CVSS v3.1 vector, and its base score is computed from that vector rather than typed in. Severity follows the CVSS bands: Low 0.1–3.9, Medium 4.0–6.9, High 7.0–8.9 and Critical 9.0–10.0.</p>
-          </details>
+          </div>
       </div>
       </div>
       <div class="cta-row">
@@ -412,8 +427,53 @@
         </div>
         <div class="report">
           <p><b>Want this team on your systems?</b> The specialists behind BlackHalo also work for clients: focused assessments, continuous testing programmes and software security research with coordinated disclosure.</p>
-          <a class="btn btn-secondary" href="https://www.lufthansa-industry-solutions.com/de-en/solutions-products/it-security-consulting/pentest-penetration-tests-from-lufthansa-industry-solutions" target="_blank" rel="noopener noreferrer">Penetration testing at LHIND</a>
+          <a class="btn btn-secondary" href="about.html#engage">How we work with clients</a>
         </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap" id="why-rule"><div class="rule"></div></div>
+
+  <div class="wrap">
+    <section id="why-blackhalo" aria-labelledby="why-title">
+      <div class="sec-head">
+        <div>
+          <div class="kicker">Why BlackHalo</div>
+          <h2 id="why-title">Not another autonomous agent.</h2>
+          <p>Autonomous pentest agents are common now — tools like Strix, ARTEX, PentestGPT and CyberStrikeAI all spin up specialist agents, validate findings, keep state and run local models. BlackHalo isn't trying to be one more of those. What sets it apart is the discipline around the assessment: what counts as tested, what counts as proved, who is allowed to act, and an expert who stands behind the result. The record above is that discipline in practice.</p>
+        </div>
+      </div>
+      <ol class="why-points">
+        <li>
+          <span class="no">01</span>
+          <h3>Coverage is a declared denominator</h3>
+          <p>An assessment names the finite set of things that must be investigated — assets, builds, identities, every render and authorization path — and tracks what is blocked, deferred or still open. "The page loaded" is not "every path was exercised." It is how missed sub-routes, wrong renderers and premature "not vulnerable" calls get caught before a report goes out.</p>
+        </li>
+        <li>
+          <span class="no">02</span>
+          <h3>Evidence is graded, not asserted</h3>
+          <p>Every finding carries an assurance level: supported by source, reproduced in a controlled setting, or verified as a live effect in the target environment. A suspected code weakness, a lab reproduction and a proven live impact are three different claims with three different remediation priorities — and the client sees which one they have.</p>
+        </li>
+        <li>
+          <span class="no">03</span>
+          <h3>Depth is separated from authority</h3>
+          <p>How hard BlackHalo investigates is a different setting from what it is permitted to do. Deep source analysis never silently grants more intrusive actions; in production, each action against a target needs explicit approval. Capability never turns into authority by accident.</p>
+        </li>
+        <li>
+          <span class="no">04</span>
+          <h3>An expert owns the outcome</h3>
+          <p>The agent engine widens the search and speeds up analysis; specialists choose the targets, challenge what it produces, adjudicate every finding and write the remediation. The researcher — not the tool — answers for what is reported and published, and is the person who turns verified findings into reduced exposure.</p>
+        </li>
+        <li>
+          <span class="no">05</span>
+          <h3>The method improves under control</h3>
+          <p>Retrospectives, versioned changes to the assessment skills, independent evaluation against unseen cases and the ability to roll back — so what BlackHalo learns from a hard run is adopted with provenance and review, not drift.</p>
+        </li>
+      </ol>
+      <div class="principle why-honest">
+        <p class="quote">We don't claim to find more than every other tool, or to run without people.</p>
+        <p>Those are things to prove on a bench, not assert on a page. What we claim is a dependable method and an accountable service — and an honest public record, including the ones another team was credited for. <a class="w-link" href="about.html">How we work with clients <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a></p>
       </div>
     </section>
   </div>
@@ -430,7 +490,7 @@
       </div>
       <div>
         <h4>Explore</h4>
-        <nav aria-label="Explore"><a href="#statistics">Statistics</a><a href="#disclosures">Disclosure index</a><a href="#repositories">Research repositories</a></nav>
+        <nav aria-label="Explore"><a href="about.html">Why BlackHalo</a><a href="#statistics">Statistics</a><a href="#disclosures">Disclosure index</a><a href="#repositories">Research repositories</a></nav>
       </div>
       <div>
         <h4>Disclosure</h4>
@@ -443,7 +503,7 @@
     </div>
     <div class="foot-bottom">
       <span>© <span id="year"></span> BlackHalo · Georg Ph. E. Heise</span>
-      <span>A Lufthansa Industry Solutions platform</span>
+      <span class="legal"><a href="https://www.lufthansa-industry-solutions.com/de-en/imprint" target="_blank" rel="noopener noreferrer">Imprint</a><a href="https://www.lufthansa-industry-solutions.com/de-en/data-protection" target="_blank" rel="noopener noreferrer">Privacy</a></span>
     </div>
   </div>
 </footer>
