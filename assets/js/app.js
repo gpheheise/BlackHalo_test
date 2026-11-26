@@ -253,6 +253,8 @@ function renderClockStats(now) {
   const fixedEmb = EMB.filter((e) => e.fixedAt != null).length;
   const fixedRel = STATS?.response?.fixedBefore ?? 0;   // disclosed findings the vendor fixed before disclosure
   const fixedN = fixedEmb + fixedRel, allN = EMB.length + (STATS?.released?.total ?? 0);
+  const ackN = EMB.filter((e) => e.life.ackDay != null).length;
+  const ackOpen = EMB.filter((e) => e.life.ackDay != null && e.fixedAt == null).length;
   const spark = new Array(14).fill(0);
   const d0 = dayStart(now) - 13 * DAY;
   for (const e of EMB) { const i = Math.round((dayStart(e.life.reported) - d0) / DAY); if (i >= 0 && i < 14) spark[i]++; }
@@ -261,6 +263,7 @@ function renderClockStats(now) {
     <div class="cstat"><span class="cl">Under embargo</span><b class="cv num">${num(EMB.length)}</b><span class="cs">vendors notified, details withheld</span></div>
     <div class="cstat"><span class="cl">Reported in the last 24 h</span><b class="cv num">${num(newToday)}</b><span class="spark" role="img" aria-label="Findings reported per day, last 14 days: ${spark.join(", ")}">${spark.map((v, i) => `<i data-tip-title="${esc(dayFmt.format(d0 + i * DAY))}" data-tip-body="${plural(v, "finding")} reported"></i>`).join("")}</span></div>
     <div class="cstat"><span class="cl">Releasing within 24 h</span><b class="cv num">${num(in24)}</b><span class="cs">${num(in7)} within 7 days</span></div>
+    <div class="cstat"><span class="cl">Acknowledged by vendor</span><b class="cv num">${num(ackN)}</b><span class="cs">${ackN ? `vendor confirmed the report · ${num(ackOpen)} not yet fixed` : "none acknowledged yet"}</span></div>
     <div class="cstat"><span class="cl">Patched before disclosure</span><b class="cv num">${num(fixedN)}<small>/ ${num(allN)}</small></b><span class="cs">${num(fixedRel)} since disclosed · ${num(fixedEmb)} still under embargo</span></div>
     ${next ? `<a class="cstat tone" href="#${next.slug}" data-until="${next.life.releaseAt}" data-kind="tone"><span class="cl">Next full disclosure</span><b class="cv mono" data-until="${next.life.releaseAt}" data-mode="short">${shortLeft(next.life.releaseAt - now)}</b><span class="cs">${esc(next.trackingId)} · ${esc(shortWhen.format(next.life.releaseAt))}</span></a>`
       : '<div class="cstat"><span class="cl">Next full disclosure</span><b class="cv">–</b><span class="cs">all releases paused</span></div>'}`;
