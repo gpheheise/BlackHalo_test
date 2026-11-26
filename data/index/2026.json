@@ -1,9 +1,15 @@
-{"fields":["id","trackingId","title","vendor","product","type","cwe","date","cvss","fixedDay","releaseDay","repo","poc"],"types":["Broken Access Control","IDOR","Information Disclosure","Stored XSS"],"rows":[
-["BH-2026-0002","BH-2026-0002","Stored Cross-Site Scripting in SCORM 2004 debug logs","ILIAS","ILIAS 9.22",3,"CWE-79","2026-11-17",8.7,76,76,"gpheheise/BH-2026-09-02",0],
-["BH-2026-0003","BH-2026-0003","Unauthenticated execution of web-exposed Composer vendor maintenance scripts","ILIAS","ILIAS 9.22",2,"CWE-552","2026-11-17",8.6,76,76,"gpheheise/BH-2026-09-03",0],
+{"fields":["id","trackingId","title","vendor","product","type","cwe","date","cvss","fixedDay","releaseDay","repo","poc"],"types":["Broken Access Control","Cross-Site Scripting","IDOR","Information Disclosure","Insecure Direct Object Reference","Privilege Escalation","Remote Code Execution","SQL Injection","Stored XSS"],"rows":[
+["BH-2026-0288","BH-2026-0288","Any authenticated user can read and write any course's settings","Chamilo","Chamilo LMS 3.0.2",0,"CWE-862","2026-11-26",8.1,2,2,"gpheheise/BH-2026-1124-01",1],
+["BH-2026-0289","BH-2026-0289","Teacher to platform admin via CC1.3 file read and JWT key theft","Chamilo","Chamilo LMS 3.0.2",5,"CWE-269","2026-11-26",9.9,2,2,"gpheheise/BH-2026-1124-02",1],
+["BH-2026-0291","BH-2026-0291","Unauthenticated time-based SQL injection in survey/edit_meeting.php","Chamilo","Chamilo LMS 3.0.2",7,"CWE-89","2026-11-26",9.1,2,2,"gpheheise/BH-2026-1124-04",1],
+["BH-2026-0292","BH-2026-0292","Authenticated RCE via crafted course-backup SCORM restore and custom-page include","Chamilo","Chamilo LMS 3.0.2",6,"CWE-434","2026-11-26",8.4,2,2,"gpheheise/BH-2026-1124-05",1],
+["BH-2026-0293","BH-2026-0293","Stored XSS via user name in the course user list (learner -> administrator)","Chamilo","Chamilo LMS 3.0.2",1,"CWE-79","2026-11-26",8.7,0,0,null,0],
+["BH-2026-0294","BH-2026-0294","Cross-course gradebook read and deletion through the legacy result page","Chamilo","Chamilo LMS 3.0.2",4,"CWE-639","2026-11-26",8.1,0,0,null,0],
+["BH-2026-0002","BH-2026-0002","Stored Cross-Site Scripting in SCORM 2004 debug logs","ILIAS","ILIAS 9.22",8,"CWE-79","2026-11-17",8.7,76,76,"gpheheise/BH-2026-09-02",0],
+["BH-2026-0003","BH-2026-0003","Unauthenticated execution of web-exposed Composer vendor maintenance scripts","ILIAS","ILIAS 9.22",3,"CWE-552","2026-11-17",8.6,76,76,"gpheheise/BH-2026-09-03",0],
 ["BH-2026-0004","BH-2026-0004","Unauthenticated modification of repository File settings","ILIAS","ILIAS 9.22",0,"CWE-862","2026-11-17",8.2,76,76,"gpheheise/BH-2026-09-04",0],
-["BH-2026-0014","BH-2026-0014","Cross-object File download through the Glossary handler","ILIAS","ILIAS 9.22",1,"CWE-639","2026-11-17",6.5,76,76,"gpheheise/BH-2026-09-14",0],
-["BH-2026-0020","BH-2026-0020","Disclosure of the Composer dependency inventory","ILIAS","ILIAS 9.22",2,"CWE-200","2026-11-17",5.3,76,76,"gpheheise/BH-2026-09-20",0],
+["BH-2026-0014","BH-2026-0014","Cross-object File download through the Glossary handler","ILIAS","ILIAS 9.22",2,"CWE-639","2026-11-17",6.5,76,76,"gpheheise/BH-2026-09-14",0],
+["BH-2026-0020","BH-2026-0020","Disclosure of the Composer dependency inventory","ILIAS","ILIAS 9.22",3,"CWE-200","2026-11-17",5.3,76,76,"gpheheise/BH-2026-09-20",0],
 ["BH-2026-0022","BH-2026-0022","Unauthenticated SOAP group configuration and stored access-code disclosure","ILIAS","ILIAS 9.22",0,"CWE-862","2026-11-17",5.3,76,76,"gpheheise/BH-2026-09-22",0],
 ["BH-2026-0023","BH-2026-0023","SOAP clients can enumerate arbitrary users' effective repository permissions","ILIAS","ILIAS 9.22",0,"CWE-862","2026-11-17",4.3,76,76,"gpheheise/BH-2026-09-23",0]
 ]}

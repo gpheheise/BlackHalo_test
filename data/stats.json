@@ -8,30 +8,50 @@
   "releaseTimeUtc": "08:00"
  },
  "released": {
-  "total": 7,
+  "total": 13,
   "years": {
-   "2026": 7
+   "2026": 13
   },
   "months": {
-   "2026-11": 7
+   "2026-11": 13
   },
   "severity": {
-   "Critical": 0,
-   "High": 3,
+   "Critical": 2,
+   "High": 7,
    "Medium": 4,
    "Low": 0
   },
   "classes": [
    [
     "Broken Access Control",
-    3
+    4
    ],
    [
     "Information Disclosure",
     2
    ],
    [
+    "Cross-Site Scripting",
+    1
+   ],
+   [
     "IDOR",
+    1
+   ],
+   [
+    "Insecure Direct Object Reference",
+    1
+   ],
+   [
+    "Privilege Escalation",
+    1
+   ],
+   [
+    "Remote Code Execution",
+    1
+   ],
+   [
+    "SQL Injection",
     1
    ],
    [
@@ -39,129 +59,148 @@
     1
    ]
   ],
-  "vendors": 1,
+  "vendors": 2,
   "vendorsTop": [
    [
     "ILIAS",
     7
+   ],
+   [
+    "Chamilo",
+    6
    ]
   ],
-  "repos": 7,
-  "withRepo": 7,
-  "poc": 0,
+  "repos": 11,
+  "withRepo": 11,
+  "poc": 4,
   "cvss": {
-   "avg": 6.7,
+   "avg": 7.6,
    "min": 4.3,
-   "max": 8.7
+   "max": 9.9
   },
   "latest": [
    {
-    "id": "BH-2026-0002",
-    "trackingId": "BH-2026-0002",
-    "title": "Stored Cross-Site Scripting in SCORM 2004 debug logs",
-    "vendor": "ILIAS",
-    "product": "ILIAS 9.22",
-    "date": "2026-11-17",
-    "releasedAt": "2026-11-17T12:00:00Z",
+    "id": "BH-2026-0288",
+    "trackingId": "BH-2026-0288",
+    "title": "Any authenticated user can read and write any course's settings",
+    "vendor": "Chamilo",
+    "product": "Chamilo LMS 3.0.2",
+    "date": "2026-11-26",
+    "releasedAt": "2026-11-26T09:00:00Z",
+    "severity": "High",
+    "cvss": 8.1,
+    "repo": "gpheheise/BH-2026-1124-01"
+   },
+   {
+    "id": "BH-2026-0289",
+    "trackingId": "BH-2026-0289",
+    "title": "Teacher to platform admin via CC1.3 file read and JWT key theft",
+    "vendor": "Chamilo",
+    "product": "Chamilo LMS 3.0.2",
+    "date": "2026-11-26",
+    "releasedAt": "2026-11-26T09:00:00Z",
+    "severity": "Critical",
+    "cvss": 9.9,
+    "repo": "gpheheise/BH-2026-1124-02"
+   },
+   {
+    "id": "BH-2026-0291",
+    "trackingId": "BH-2026-0291",
+    "title": "Unauthenticated time-based SQL injection in survey/edit_meeting.php",
+    "vendor": "Chamilo",
+    "product": "Chamilo LMS 3.0.2",
+    "date": "2026-11-26",
+    "releasedAt": "2026-11-26T09:00:00Z",
+    "severity": "Critical",
+    "cvss": 9.1,
+    "repo": "gpheheise/BH-2026-1124-04"
+   },
+   {
+    "id": "BH-2026-0292",
+    "trackingId": "BH-2026-0292",
+    "title": "Authenticated RCE via crafted course-backup SCORM restore and custom-page include",
+    "vendor": "Chamilo",
+    "product": "Chamilo LMS 3.0.2",
+    "date": "2026-11-26",
+    "releasedAt": "2026-11-26T09:00:00Z",
+    "severity": "High",
+    "cvss": 8.4,
+    "repo": "gpheheise/BH-2026-1124-05"
+   },
+   {
+    "id": "BH-2026-0293",
+    "trackingId": "BH-2026-0293",
+    "title": "Stored XSS via user name in the course user list (learner -> administrator)",
+    "vendor": "Chamilo",
+    "product": "Chamilo LMS 3.0.2",
+    "date": "2026-11-26",
+    "releasedAt": "2026-11-26T09:00:00Z",
     "severity": "High",
     "cvss": 8.7,
-    "repo": "gpheheise/BH-2026-09-02"
+    "repo": null
    },
    {
-    "id": "BH-2026-0003",
-    "trackingId": "BH-2026-0003",
-    "title": "Unauthenticated execution of web-exposed Composer vendor maintenance scripts",
-    "vendor": "ILIAS",
-    "product": "ILIAS 9.22",
-    "date": "2026-11-17",
-    "releasedAt": "2026-11-17T12:00:00Z",
+    "id": "BH-2026-0294",
+    "trackingId": "BH-2026-0294",
+    "title": "Cross-course gradebook read and deletion through the legacy result page",
+    "vendor": "Chamilo",
+    "product": "Chamilo LMS 3.0.2",
+    "date": "2026-11-26",
+    "releasedAt": "2026-11-26T09:00:00Z",
     "severity": "High",
-    "cvss": 8.6,
-    "repo": "gpheheise/BH-2026-09-03"
-   },
-   {
-    "id": "BH-2026-0004",
-    "trackingId": "BH-2026-0004",
-    "title": "Unauthenticated modification of repository File settings",
-    "vendor": "ILIAS",
-    "product": "ILIAS 9.22",
-    "date": "2026-11-17",
-    "releasedAt": "2026-11-17T12:00:00Z",
-    "severity": "High",
-    "cvss": 8.2,
-    "repo": "gpheheise/BH-2026-09-04"
-   },
-   {
-    "id": "BH-2026-0014",
-    "trackingId": "BH-2026-0014",
-    "title": "Cross-object File download through the Glossary handler",
-    "vendor": "ILIAS",
-    "product": "ILIAS 9.22",
-    "date": "2026-11-17",
-    "releasedAt": "2026-11-17T12:00:00Z",
-    "severity": "Medium",
-    "cvss": 6.5,
-    "repo": "gpheheise/BH-2026-09-14"
-   },
-   {
-    "id": "BH-2026-0020",
-    "trackingId": "BH-2026-0020",
-    "title": "Disclosure of the Composer dependency inventory",
-    "vendor": "ILIAS",
-    "product": "ILIAS 9.22",
-    "date": "2026-11-17",
-    "releasedAt": "2026-11-17T12:00:00Z",
-    "severity": "Medium",
-    "cvss": 5.3,
-    "repo": "gpheheise/BH-2026-09-20"
-   },
-   {
-    "id": "BH-2026-0022",
-    "trackingId": "BH-2026-0022",
-    "title": "Unauthenticated SOAP group configuration and stored access-code disclosure",
-    "vendor": "ILIAS",
-    "product": "ILIAS 9.22",
-    "date": "2026-11-17",
-    "releasedAt": "2026-11-17T12:00:00Z",
-    "severity": "Medium",
-    "cvss": 5.3,
-    "repo": "gpheheise/BH-2026-09-22"
+    "cvss": 8.1,
+    "repo": null
    }
   ]
  },
  "reported": {
-  "total": 292,
+  "total": 440,
   "missed": 0,
   "months": {
    "2026-09": 23,
    "2026-10": 117,
-   "2026-11": 152
+   "2026-11": 300
   },
   "severity": {
-   "Critical": 8,
-   "High": 84,
-   "Medium": 184,
-   "Low": 16
+   "Critical": 11,
+   "High": 126,
+   "Medium": 278,
+   "Low": 25
   },
   "classes": [
+   [
+    "Broken Access Control",
+    106,
+    4
+   ],
    [
     "IDOR",
     85,
     1
    ],
    [
-    "Broken Access Control",
-    82,
-    3
+    "Insecure Direct Object Reference",
+    47,
+    1
    ],
    [
     "Information Disclosure",
-    19,
+    32,
     2
    ],
    [
+    "Cross-Site Scripting",
+    27,
+    1
+   ],
+   [
     "Authentication Bypass",
-    13,
+    14,
+    0
+   ],
+   [
+    "Path Traversal",
+    14,
     0
    ],
    [
@@ -175,9 +214,9 @@
     0
    ],
    [
-    "Path Traversal",
-    9,
-    0
+    "Privilege Escalation",
+    10,
+    1
    ],
    [
     "SSRF",
@@ -188,32 +227,17 @@
     "SQLi",
     7,
     0
-   ],
-   [
-    "Mass Assignment",
-    5,
-    0
-   ],
-   [
-    "Privilege Escalation",
-    4,
-    0
-   ],
-   [
-    "RCE",
-    4,
-    0
    ]
   ],
   "cvss": {
    "avg": 6.3,
-   "min": 2.7,
+   "min": 2,
    "max": 9.9
   }
  },
  "response": {
-  "released": 7,
-  "fixedBefore": 7,
+  "released": 13,
+  "fixedBefore": 13,
   "fixedAfter": 0,
   "unpatched": 0,
   "median": 76,
@@ -221,7 +245,7 @@
   "bins": [
    [
     0,
-    0,
+    6,
     0,
     0
    ],
@@ -347,6 +371,36 @@
    ]
   ],
   "points": [
+   [
+    0,
+    0,
+    "BH-2026-0293"
+   ],
+   [
+    0,
+    0,
+    "BH-2026-0294"
+   ],
+   [
+    2,
+    0,
+    "BH-2026-0288"
+   ],
+   [
+    2,
+    0,
+    "BH-2026-0289"
+   ],
+   [
+    2,
+    0,
+    "BH-2026-0291"
+   ],
+   [
+    2,
+    0,
+    "BH-2026-0292"
+   ],
    [
     76,
     0,
