@@ -8,17 +8,17 @@
   "releaseTimeUtc": "08:00"
  },
  "released": {
-  "total": 13,
+  "total": 18,
   "years": {
-   "2026": 13
+   "2026": 18
   },
   "months": {
-   "2026-11": 13
+   "2026-11": 18
   },
   "severity": {
-   "Critical": 2,
-   "High": 7,
-   "Medium": 4,
+   "Critical": 3,
+   "High": 8,
+   "Medium": 7,
    "Low": 0
   },
   "classes": [
@@ -27,12 +27,20 @@
     4
    ],
    [
+    "Cross-Site Scripting",
+    2
+   ],
+   [
     "Information Disclosure",
     2
    ],
    [
-    "Cross-Site Scripting",
-    1
+    "Privilege Escalation",
+    2
+   ],
+   [
+    "SQL Injection",
+    2
    ],
    [
     "IDOR",
@@ -43,15 +51,15 @@
     1
    ],
    [
-    "Privilege Escalation",
+    "Missing Authentication",
+    1
+   ],
+   [
+    "OS Command Injection",
     1
    ],
    [
     "Remote Code Execution",
-    1
-   ],
-   [
-    "SQL Injection",
     1
    ],
    [
@@ -62,23 +70,83 @@
   "vendors": 2,
   "vendorsTop": [
    [
-    "ILIAS",
-    7
+    "Chamilo",
+    11
    ],
    [
-    "Chamilo",
-    6
+    "ILIAS",
+    7
    ]
   ],
-  "repos": 11,
-  "withRepo": 11,
-  "poc": 4,
+  "repos": 12,
+  "withRepo": 12,
+  "poc": 5,
   "cvss": {
    "avg": 7.6,
    "min": 4.3,
    "max": 9.9
   },
   "latest": [
+   {
+    "id": "BH-2026-0290",
+    "trackingId": "BH-2026-0290",
+    "title": "Admin mailer DSN to OS command execution (webshell)",
+    "vendor": "Chamilo",
+    "product": "Chamilo LMS 3.0.2",
+    "date": "2026-11-27",
+    "releasedAt": "2026-11-27T09:00:00Z",
+    "severity": "Critical",
+    "cvss": 9.9,
+    "repo": "gpheheise/BH-2026-1124-03"
+   },
+   {
+    "id": "BH-2026-0295",
+    "trackingId": "BH-2026-0295",
+    "title": "Blind SQL injection in `subscribe_user2course.php` (CourseList[])",
+    "vendor": "Chamilo",
+    "product": "Chamilo LMS 3.0.2",
+    "date": "2026-11-27",
+    "releasedAt": "2026-11-27T09:00:00Z",
+    "severity": "Medium",
+    "cvss": 6.5,
+    "repo": null
+   },
+   {
+    "id": "BH-2026-0302",
+    "trackingId": "BH-2026-0302",
+    "title": "Unauthenticated stored XSS through course descriptions on the session page",
+    "vendor": "Chamilo",
+    "product": "Chamilo LMS 3.0.2",
+    "date": "2026-11-27",
+    "releasedAt": "2026-11-27T09:00:00Z",
+    "severity": "Medium",
+    "cvss": 6.4,
+    "repo": null
+   },
+   {
+    "id": "BH-2026-0325",
+    "trackingId": "BH-2026-0325",
+    "title": "Session manager can reset a platform administrator's password and take over the account",
+    "vendor": "Chamilo",
+    "product": "Chamilo LMS 3.0.2",
+    "date": "2026-11-27",
+    "releasedAt": "2026-11-27T09:00:00Z",
+    "severity": "High",
+    "cvss": 8.1,
+    "repo": null
+   },
+   {
+    "id": "BH-2026-0328",
+    "trackingId": "BH-2026-0328",
+    "title": "Unauthenticated access to uploaded SCORM assets with same-origin HTML execution",
+    "vendor": "Chamilo",
+    "product": "Chamilo LMS 3.0.2",
+    "date": "2026-11-27",
+    "releasedAt": "2026-11-27T09:00:00Z",
+    "severity": "Medium",
+    "cvss": 6.1,
+    "repo": null
+   },
    {
     "id": "BH-2026-0288",
     "trackingId": "BH-2026-0288",
@@ -90,66 +158,6 @@
     "severity": "High",
     "cvss": 8.1,
     "repo": "gpheheise/BH-2026-1124-01"
-   },
-   {
-    "id": "BH-2026-0289",
-    "trackingId": "BH-2026-0289",
-    "title": "Teacher to platform admin via CC1.3 file read and JWT key theft",
-    "vendor": "Chamilo",
-    "product": "Chamilo LMS 3.0.2",
-    "date": "2026-11-26",
-    "releasedAt": "2026-11-26T09:00:00Z",
-    "severity": "Critical",
-    "cvss": 9.9,
-    "repo": "gpheheise/BH-2026-1124-02"
-   },
-   {
-    "id": "BH-2026-0291",
-    "trackingId": "BH-2026-0291",
-    "title": "Unauthenticated time-based SQL injection in survey/edit_meeting.php",
-    "vendor": "Chamilo",
-    "product": "Chamilo LMS 3.0.2",
-    "date": "2026-11-26",
-    "releasedAt": "2026-11-26T09:00:00Z",
-    "severity": "Critical",
-    "cvss": 9.1,
-    "repo": "gpheheise/BH-2026-1124-04"
-   },
-   {
-    "id": "BH-2026-0292",
-    "trackingId": "BH-2026-0292",
-    "title": "Authenticated RCE via crafted course-backup SCORM restore and custom-page include",
-    "vendor": "Chamilo",
-    "product": "Chamilo LMS 3.0.2",
-    "date": "2026-11-26",
-    "releasedAt": "2026-11-26T09:00:00Z",
-    "severity": "High",
-    "cvss": 8.4,
-    "repo": "gpheheise/BH-2026-1124-05"
-   },
-   {
-    "id": "BH-2026-0293",
-    "trackingId": "BH-2026-0293",
-    "title": "Stored XSS via user name in the course user list (learner -> administrator)",
-    "vendor": "Chamilo",
-    "product": "Chamilo LMS 3.0.2",
-    "date": "2026-11-26",
-    "releasedAt": "2026-11-26T09:00:00Z",
-    "severity": "High",
-    "cvss": 8.7,
-    "repo": null
-   },
-   {
-    "id": "BH-2026-0294",
-    "trackingId": "BH-2026-0294",
-    "title": "Cross-course gradebook read and deletion through the legacy result page",
-    "vendor": "Chamilo",
-    "product": "Chamilo LMS 3.0.2",
-    "date": "2026-11-26",
-    "releasedAt": "2026-11-26T09:00:00Z",
-    "severity": "High",
-    "cvss": 8.1,
-    "repo": null
    }
   ]
  },
@@ -191,7 +199,7 @@
    [
     "Cross-Site Scripting",
     27,
-    1
+    2
    ],
    [
     "Authentication Bypass",
@@ -216,7 +224,7 @@
    [
     "Privilege Escalation",
     10,
-    1
+    2
    ],
    [
     "SSRF",
@@ -236,10 +244,10 @@
   }
  },
  "response": {
-  "released": 13,
+  "released": 18,
   "fixedBefore": 13,
   "fixedAfter": 0,
-  "unpatched": 0,
+  "unpatched": 5,
   "median": 76,
   "top": 105,
   "bins": [
