@@ -17,8 +17,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/site.css?v=20261121-3">
-<script type="module" src="assets/js/about.js?v=20261121-3"></script>
+<link rel="stylesheet" href="assets/css/site.css?v=20261127-1">
+<script type="module" src="assets/js/about.js?v=20261127-1"></script>
 </head>
 <body class="why">
 <div class="bg" aria-hidden="true"></div>
@@ -40,13 +40,18 @@
     <nav class="nav" aria-label="Sections">
       <a href="index.html">The record</a>
       <a href="#heritage">Heritage</a>
+      <a href="#operating-modes">Modes</a>
       <a href="#containment">Containment</a>
       <a href="#depth">The platform</a>
       <a href="#engage">Engagements</a>
       <a href="#questions">Questions</a>
     </nav>
     <div class="top-actions">
-      <a class="btn btn-primary btn-sm" href="#start">Discuss your scope</a>
+      <a class="btn btn-secondary btn-sm ab-back" href="index.html">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2.5 13.5v-5M6.5 13.5v-9M10.5 13.5v-6M14 13.5H2"/></svg>
+        The record
+      </a>
+      <a class="btn btn-primary btn-sm" href="#start"><span class="ds-long">Discuss your scope</span><span class="ds-short">Contact us</span></a>
     </div>
   </div>
 </header>
@@ -102,12 +107,18 @@
   <!-- ============ heritage ============ -->
   <div class="wrap">
     <section id="heritage" aria-labelledby="her-title">
-      <div class="sec-head">
-        <div>
-          <div class="kicker">A decade at the sharp end</div>
-          <h2 id="her-title">Ten years of testing where failure isn't an option — brought into one platform.</h2>
-          <p>BlackHalo didn't start as a product. It started as the working knowledge of a team that has spent more than ten years testing the security of aviation systems — a field where a single missed weakness is never acceptable, and every control has to be proven rather than assumed. We took all of it — the methodology, the attack playbooks, the habit of evidencing a finding before anyone acts on it — and built it into the platform. The bar is the same whether you fly aircraft, move money, run a hospital network or a production line: if your systems have to withstand the highest level of scrutiny, this is the discipline they were built against.</p>
+      <div class="ab-her">
+        <div class="sec-head">
+          <div>
+            <div class="kicker">A decade at the sharp end</div>
+            <h2 id="her-title">Ten years of testing where failure isn't an option — brought into one platform.</h2>
+            <p>BlackHalo didn't start as a product. It started as the working knowledge of a team that has spent more than ten years testing the security of aviation systems — a field where a single missed weakness is never acceptable, and every control has to be proven rather than assumed. We took all of it — the methodology, the attack playbooks, the habit of evidencing a finding before anyone acts on it — and built it into the platform. The bar is the same whether you fly aircraft, move money, run a hospital network or a production line: if your systems have to withstand the highest level of scrutiny, this is the discipline they were built against.</p>
+          </div>
         </div>
+        <figure class="ab-her-fig">
+          <img src="assets/img/about/heritage-fan.svg" width="560" height="560" loading="lazy" decoding="async" alt="Engineering-style line drawing of a jet-engine fan seen head-on, its rim echoing the BlackHalo halo.">
+          <figcaption>An engine fan, drawn the way engineers document it: every part named, nothing assumed.</figcaption>
+        </figure>
       </div>
       <ul class="cred-row">
         <li><b>10+ years</b><span>at aviation-grade security standards</span></li>
@@ -208,6 +219,60 @@
     </section>
   </div>
 
+  <!-- ============ operating modes ============ -->
+  <div class="wrap">
+    <section id="operating-modes" aria-labelledby="modes-title">
+      <div class="sec-head">
+        <div>
+          <div class="kicker">Operating modes</div>
+          <h2 id="modes-title">Different levels of autonomy. One standard of accountability.</h2>
+          <p>The level of automation should fit the engagement. We agree how the testing is directed, which tasks can run autonomously and where specialist approval is required. The modes differ in how individual testing tasks are carried out; the engagement itself is always led by a specialist.</p>
+        </div>
+      </div>
+      <ol class="ab-modes">
+        <li class="ab-mode">
+          <div class="ab-mode-art"><img src="assets/img/about/mode-human-led.svg" width="400" height="220" loading="lazy" decoding="async" alt="A specialist at the centre of the agreed scope directs every step towards three approved targets; an agent stays in the background as a supporting tool."></div>
+          <div class="ab-mode-body">
+            <span class="ab-mode-no">01</span>
+            <h3>Human-led</h3>
+            <p class="ab-mode-sub">Expert-directed investigation</p>
+            <p>Specialists lead the investigation and select each testing step, using BlackHalo's tools to support their work. Expert judgment stays closest to sensitive systems, complex decisions and the next action.</p>
+          </div>
+        </li>
+        <li class="ab-mode">
+          <div class="ab-mode-art"><img src="assets/img/about/mode-ai-assisted.svg" width="400" height="220" loading="lazy" decoding="async" alt="A specialist and an agent work side by side inside the agreed scope; the agent's actions pass an approval checkpoint before they reach the approved targets."></div>
+          <div class="ab-mode-body">
+            <span class="ab-mode-no">02</span>
+            <h3>AI-assisted</h3>
+            <p class="ab-mode-sub">Specialist and AI, side by side</p>
+            <p>AI supports investigation and analysis while specialists steer the work, challenge the results and decide how to proceed. Execution follows the approvals and checkpoints agreed for the engagement.</p>
+          </div>
+        </li>
+        <li class="ab-mode">
+          <div class="ab-mode-art"><img src="assets/img/about/mode-autonomous.svg" width="400" height="220" loading="lazy" decoding="async" alt="An agent carries out approved tasks against the targets inside the agreed scope, helped by smaller agents, while a specialist supervises from the boundary and can stop and escalate."></div>
+          <div class="ab-mode-body">
+            <span class="ab-mode-no">03</span>
+            <h3>Fully autonomous execution</h3>
+            <p class="ab-mode-sub">Agent execution within agreed limits</p>
+            <p>Agents plan and carry out approved testing tasks within the agreed scope, operating policy and stop conditions, in environments where the engagement permits it. Specialists supervise, handle escalation and review every finding before delivery.</p>
+          </div>
+        </li>
+      </ol>
+      <ul class="ab-legend" aria-label="Key to the mode diagrams">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#0c0f19" stroke="#4672f0" stroke-width="1.6"/><circle cx="12" cy="9.4" r="2.7" fill="none" stroke="#eef0f6" stroke-width="1.4"/><path d="M7.7 17c.9-3.1 7.7-3.1 8.6 0" fill="none" stroke="#eef0f6" stroke-width="1.4"/></svg>Specialist</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="20.7,17 12,22 3.3,17 3.3,7 12,2 20.7,7" fill="#0c0f19" stroke="#4672f0" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6" fill="#7b98f6"/></svg>Agent</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 21.5 12 12 21.5 2.5 12Z" fill="#0c0f19" stroke="#eef0f6" stroke-width="1.5"/><path d="m8.4 12.3 2.4 2.4 4.6-5" fill="none" stroke="#eef0f6" stroke-width="1.5"/></svg>Approval checkpoint</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="#0c0f19" stroke="#7b98f6" stroke-width="1.6"/><circle cx="12" cy="12" r="2.8" fill="#7b98f6"/></svg>Approved target</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="#7b98f6" stroke-width="1.4" stroke-dasharray="1.6 3"/><path d="M.5 12h3M20.5 12h3" stroke="#ff3b4a" stroke-width="1.8"/></svg>Agreed scope</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="20.3,15.4 15.4,20.3 8.6,20.3 3.7,15.4 3.7,8.6 8.6,3.7 15.4,3.7 20.3,8.6" fill="#ff3b4a" fill-opacity="0.14" stroke="#ff3b4a" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 12h8" stroke="#ff3b4a" stroke-width="1.8"/></svg>Stop and escalate</li>
+      </ul>
+      <div class="ab-modes-foot">
+        <p class="ab-modes-tags">Agreed scope <span aria-hidden="true">·</span> Human accountability <span aria-hidden="true">·</span> Reviewed findings</p>
+        <p>Choosing a mode never widens what is permitted. The agreed scope and the approval rules for live systems apply in every mode, and the right mode depends on the system and the actions it allows.</p>
+      </div>
+    </section>
+  </div>
+
   <!-- ============ containment ============ -->
   <div class="wrap">
     <section id="containment" aria-labelledby="cont-title">
@@ -232,6 +297,13 @@
           </ul>
         </div>
       </div>
+      <figure class="ab-fig">
+        <picture>
+          <source media="(max-width: 900px)" srcset="assets/img/about/containment-tall.svg" width="380" height="922">
+          <img src="assets/img/about/containment.svg" width="1100" height="590" loading="lazy" decoding="async" alt="Architecture diagram. The BlackHalo Core, with coordination, execution agents and a challenge-and-review role, sends all of its traffic through a separate Control Envelope. Human authority sets objectives and approvals for the Core, and scope and network policy for the Envelope. From the Envelope, traffic reaches only the approved targets; any route out of scope ends at the Envelope and is blocked.">
+        </picture>
+        <figcaption>How the boundary is designed: a testing Core above a separately controlled network Envelope. Objectives and approvals reach the Core; scope and network policy are set on the Envelope. The exact permissions are defined for each engagement.</figcaption>
+      </figure>
     </section>
   </div>
 
@@ -321,6 +393,13 @@
           <p class="w-note">Interim controls reduce exposure; they don't remove the vulnerability. The residual risk is written down, not hidden.</p>
         </div>
       </div>
+      <figure class="ab-fig">
+        <picture>
+          <source media="(max-width: 900px)" srcset="assets/img/about/interim-tall.svg" width="380" height="610">
+          <img src="assets/img/about/interim.svg" width="1100" height="360" loading="lazy" decoding="async" alt="Timeline of exposure over time. A finding is validated and reported while the attack path is fully open. An interim control such as restricting, disabling, isolating or detecting reduces the exposure, and the residual risk stays on record. The vendor fix then lands, and the finding closes only when a retest confirms it.">
+        </picture>
+        <figcaption>Illustrative timeline. Your system owners approve every change; the finding stays open, with its remaining risk on record, until a retest verifies the fix.</figcaption>
+      </figure>
     </section>
   </div>
 
@@ -338,6 +417,30 @@
         <article><svg class="w-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><h3>Priorities in business context</h3><p>Ranked by what matters to you, not by the order a tool printed them.</p></article>
         <article><svg class="w-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h10"/><circle cx="19" cy="19" r="2.5"/></svg><h3>A workable treatment plan</h3><p>Fix, interim control or accepted risk, each with an owner and a next step.</p></article>
         <article><svg class="w-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/></svg><h3>Evidence of progress</h3><p>Retests that show what is closed, what remains and what changed.</p></article>
+      </div>
+      <div class="ab-sample">
+        <div class="ab-sample-intro">
+          <div class="kicker">What a finding looks like</div>
+          <h3>See the finding. Understand the decision.</h3>
+          <p>Every finding follows the same structure, so engineers can reproduce it and decision-makers can act on it without translating.</p>
+          <p class="ab-sample-note">Illustrative example, not a customer report.</p>
+        </div>
+        <article class="ab-doc" aria-labelledby="doc-title">
+          <header class="ab-doc-head">
+            <span class="ab-doc-id">EXAMPLE · F-07</span>
+            <span class="ab-doc-sev"><i aria-hidden="true"></i>Medium · CVSS 6.5</span>
+            <span class="ab-doc-cwe">CWE-639</span>
+          </header>
+          <h4 id="doc-title">Records of another account are reachable through the records API</h4>
+          <dl class="ab-doc-fields">
+            <div><dt>What we observed</dt><dd>A signed-in user can read another customer's records by changing one identifier in the request. Reproduced with two test accounts; requests and responses attached.</dd></div>
+            <div><dt>Why it matters</dt><dd>Contact and order data for any account is exposed to any other account holder. No special privileges are needed.</dd></div>
+            <div><dt>Protect now</dt><dd>Restrict the endpoint to the record owner at the gateway and alert on unusual identifier enumeration.</dd></div>
+            <div><dt>Permanent remediation</dt><dd>Enforce an ownership check in the records service for every read and update.</dd></div>
+            <div><dt>Owner and status</dt><dd><span class="ab-chip ok">Interim control verified</span><span class="ab-chip">Fix in progress · platform team</span></dd></div>
+            <div><dt>Verification</dt><dd>Retest scheduled after the release; the finding closes only when the retest confirms it.</dd></div>
+          </dl>
+        </article>
       </div>
     </section>
   </div>
@@ -371,6 +474,13 @@
           <p>It's a platform for the systems, networks and organisations that must meet the strictest security standards — aviation, finance, healthcare, critical infrastructure. If "good enough" isn't good enough for you, that's who it's for.</p>
         </article>
       </div>
+      <figure class="ab-fig">
+        <picture>
+          <source media="(max-width: 900px)" srcset="assets/img/about/recurring-tall.svg" width="380" height="894">
+          <img src="assets/img/about/recurring.svg" width="1100" height="392" loading="lazy" decoding="async" alt="Two timelines compared. A one-off test produces evidence that ages until the next test. A recurring programme runs a baseline, then reassesses after a release and verifies after a fix or other change, so the evidence stays current.">
+        </picture>
+        <figcaption>Illustrative cadence. Timing and the changes that trigger a retest are agreed for each programme.</figcaption>
+      </figure>
     </section>
   </div>
 
@@ -404,6 +514,13 @@
           </ul>
         </div>
       </div>
+      <figure class="ab-fig">
+        <picture>
+          <source media="(max-width: 900px)" srcset="assets/img/about/signals-tall.svg" width="380" height="952">
+          <img src="assets/img/about/signals.svg" width="1100" height="470" loading="lazy" decoding="async" alt="Many unverified candidate signals from tool output converge on a specialist, who reproduces, proves and scores them; signals that cannot be reproduced are dropped. Three validated findings leave, each with a decision and an owner: fix now, an interim control, or an accepted risk. A retest confirms each outcome.">
+        </picture>
+        <figcaption>From output to outcome: tool signals are reproduced and scored by a specialist, and each confirmed finding leaves with a decision and an owner.</figcaption>
+      </figure>
     </section>
   </div>
 
@@ -574,7 +691,7 @@
       </div>
       <div>
         <h4>Why BlackHalo</h4>
-        <nav aria-label="This page"><a href="#idea">The idea</a><a href="#work">How we work</a><a href="#engage">Engagements</a><a href="#questions">Questions</a></nav>
+        <nav aria-label="This page"><a href="#idea">The idea</a><a href="#work">How we work</a><a href="#operating-modes">Operating modes</a><a href="#engage">Engagements</a><a href="#questions">Questions</a></nav>
       </div>
       <div>
         <h4>The record</h4>
