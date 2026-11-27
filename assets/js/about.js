@@ -11,8 +11,8 @@ const monthFmt = { format: (t) => { const d = new Date(t); return `${MONTHS[d.ge
 const CLASS_SHORT = { "Cross-Site Scripting": "XSS", "Insecure Direct Object Reference": "IDOR", "Server-Side Request Forgery": "SSRF", "Cross-Site Request Forgery": "CSRF" };
 
 const TOPICS = {
-  assessment: "A focused security assessment",
-  programme: "A continuous testing programme",
+  programme: "A continuous enterprise programme",
+  assessment: "A focused baseline for one service",
   research: "Software vulnerability research",
   nofix: "A finding with no fix available",
 };
@@ -64,19 +64,21 @@ async function renderProof() {
 
   // tie the scenario and the research engagement to the record
   const access = (stats?.reported?.classes ?? []).find(([t]) => /access control|direct object reference/i.test(t));
-  if (access) {
-    const note = $("#sc-note");
-    note.textContent = `${access[0]} is no hypothetical: it accounts for ${num(access[1])} of the ${num(reported)} findings in our public record.`;
+  const note = $("#sc-note");
+  if (access && note) {
+    note.textContent = `${access[0]} accounts for ${num(access[1])} of the ${num(reported)} findings in our public research record.`;
     note.hidden = false;
   }
   const live = $("#eng-live");
-  live.innerHTML = `<b class="num">${num(reported)}</b> findings reported to vendors${since ? ` since ${monthFmt.format(since)}` : ""}, <b class="num">${num(released)}</b> disclosed so far.`;
-  live.hidden = false;
+  if (live) {
+    live.innerHTML = `<b class="num">${num(reported)}</b> findings reported to vendors${since ? ` since ${monthFmt.format(since)}` : ""}, <b class="num">${num(released)}</b> disclosed so far.`;
+    live.hidden = false;
+  }
 }
 
-/* ---------- topic picker and brief ---------- */
+/* ---------- topic picker, enquiry and brief ---------- */
 function selectedTopic() {
-  return $("input[name=topic]:checked")?.value ?? "assessment";
+  return $("input[name=topic]:checked")?.value ?? "programme";
 }
 
 function brief() {
@@ -84,12 +86,31 @@ function brief() {
     "BlackHalo · discussion brief",
     "",
     `Topic: ${TOPICS[selectedTopic()]}`,
-    "Environment: (the systems, applications or products in question)",
+    "Business services: (the services and systems to start with)",
+    "Current practice: (existing assessments, scanning, reporting and change processes)",
     "Objective: (what you need to know or decide)",
-    "Constraints: (production or test environment, testing windows, data handling, stop conditions)",
+    "Constraints: (environments, testing windows, permitted actions, stopping conditions)",
     "Timing: (when you need first results)",
     "Contact: (name, role, email)",
   ].join("\n");
+}
+
+/* The enquiry button opens the LHIND contact form and puts the brief on the clipboard.
+   If the button carries data-mailto="team@example", it becomes a pre-filled e-mail instead. */
+function syncEnquiry() {
+  const topic = TOPICS[selectedTopic()];
+  const now = $("#topic-now");
+  if (now) now.textContent = topic;
+  const a = $("#enquiry");
+  const mail = a?.dataset.mailto;
+  if (mail) {
+    a.href = `mailto:${mail}?subject=${encodeURIComponent(`BlackHalo enquiry: ${topic}`)}&body=${encodeURIComponent(brief())}`;
+    a.removeAttribute("target");
+  }
+}
+
+async function copyBrief() {
+  try { await navigator.clipboard.writeText(brief()); return true; } catch { return false; }
 }
 
 let toastTimer;
@@ -116,22 +137,36 @@ function wire() {
   gapBtn?.addEventListener("click", () => { $('input[name=topic][value="nofix"]').checked = true; });
 
   $("#copy-brief").addEventListener("click", async () => {
-    const text = brief();
     const out = $("#brief-out");
-    try {
-      await navigator.clipboard.writeText(text);
+    if (await copyBrief()) {
       out.hidden = true;
       toast("Brief copied. Paste it into your message to the LHIND team.");
-    } catch {
+    } else {
       // clipboard blocked (embedded view, older browser): show it to copy by hand
-      out.value = text;
+      out.value = brief();
       out.hidden = false;
       out.focus();
       out.select();
       toast("Select the brief below and copy it.");
     }
   });
-  for (const r of $$("input[name=topic]")) r.addEventListener("change", () => { const out = $("#brief-out"); if (!out.hidden) out.value = brief(); });
+
+  // main enquiry: carry the chosen topic along (clipboard for the web form, or a pre-filled e-mail)
+  const enquiry = $("#enquiry");
+  if (enquiry && !enquiry.dataset.mailto) {
+    enquiry.addEventListener("click", () => {
+      copyBrief().then((ok) => toast(ok ? "Your topic and brief are on the clipboard. Paste them into the contact form." : "Use \u201cOnly copy the brief\u201d if you want a template for your message."));
+    });
+  }
+
+  for (const r of $$("input[name=topic]")) r.addEventListener("change", () => {
+    const out = $("#brief-out");
+    if (!out.hidden) out.value = brief();
+    syncEnquiry();
+  });
+  for (const a of $$("[data-topic]")) a.addEventListener("click", syncEnquiry);
+  gapBtn?.addEventListener("click", syncEnquiry);
+  syncEnquiry();
 }
 
 wire();
